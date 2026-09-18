@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Resource_Action;
+namespace App\Http\Controllers\Admin\Modules\Resource_Action;
 
 use App\Http\Controllers\Controller;
 use App\Models\Modules\Subjects\Science;

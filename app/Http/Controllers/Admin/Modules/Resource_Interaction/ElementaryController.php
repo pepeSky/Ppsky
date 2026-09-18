@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Resource_Interaction;
+namespace App\Http\Controllers\Admin\Modules\Resource_Interaction;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

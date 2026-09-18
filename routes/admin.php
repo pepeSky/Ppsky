@@ -29,15 +29,17 @@ use App\Http\Controllers\Admin\Modules\StoreController;
 use App\Http\Controllers\Admin\Modules\WarehouseController;
 use App\Http\Controllers\Admin\Modules\DesignController;
 
-use App\Http\Controllers\Admin\Resource_Interaction\BusinessController;
-use App\Http\Controllers\Admin\Development\TaskController;
-use App\Http\Controllers\Admin\Resource_Action\ProcessController;
-use App\Http\Controllers\Admin\Resource_Interaction\ElementaryController;
-use App\Http\Controllers\Admin\Resource_Interaction\OperativeController;
-use App\Http\Controllers\Admin\Resource_Interaction\ServiceController;
-use App\Http\Controllers\Admin\Resource_Interaction\SupportController;
-use App\Http\Controllers\Admin\Subject\SubjectController;
+use App\Http\Controllers\Admin\Modules\Resource_Action\ScienceController;
+use App\Http\Controllers\Admin\Modules\Resource_Action\ProcessController;
+use App\Http\Controllers\Admin\Modules\Resource_Interaction\BusinessController;
+use App\Http\Controllers\Admin\Modules\Resource_Interaction\ElementaryController;
+use App\Http\Controllers\Admin\Modules\Resource_Interaction\OperativeController;
+use App\Http\Controllers\Admin\Modules\Resource_Interaction\ServiceController;
+use App\Http\Controllers\Admin\Modules\Resource_Interaction\SupportController;
 
+use App\Http\Controllers\Admin\Modules\Study\SubjectController;
+
+use App\Http\Controllers\Admin\Modules\Development\TaskController;
 
 /*
 |--------------------------------------------------------------------------
