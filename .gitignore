@@ -14,3 +14,7 @@ yarn-error.log
 /.idea
 /.vscode
 .DS_Store
+
+# Laravel Mix compiled assets
+/public/css
+/public/js

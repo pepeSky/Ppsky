@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Livewire\Admin;
 
-use App\Models\Post;
+use App\Models\Activity;
 use Livewire\Component;
-
 use Livewire\WithPagination;
 
-class PostsIndex extends Component
+class ActivityIndex extends Component
 {
     use WithPagination;
 
@@ -19,13 +18,14 @@ class PostsIndex extends Component
         $this->resetPage();
     }
 
+
     public function render()
     {
-        $posts = Post::all(); //where('user_id', auth()->user()->id)
+        $activities = Activity::all(); //where('user_id', auth()->user()->id)
                                // ->where('name','LIKE', '%' . $this->search . '%')
                                // ->latest('id')
                                // ->paginate();
 
-        return view('livewire.admin.posts-index', compact('posts'));
+        return view('livewire.admin.activity-index', compact('activities'));
     }
 }

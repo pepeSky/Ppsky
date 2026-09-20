@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Livewire\Admin;
 
-use App\Models\Entity;
+use App\Models\Post;
 use Livewire\Component;
+
 use Livewire\WithPagination;
 
-class EntityIndex extends Component
+class PostsIndex extends Component
 {
     use WithPagination;
 
@@ -20,11 +21,11 @@ class EntityIndex extends Component
 
     public function render()
     {
-        $entities = Entity::all(); //where('user_id', auth()->user()->id)
+        $posts = Post::all(); //where('user_id', auth()->user()->id)
                                // ->where('name','LIKE', '%' . $this->search . '%')
                                // ->latest('id')
                                // ->paginate();
 
-        return view('livewire.admin.entity-index', compact('entities'));
+        return view('livewire.admin.posts-index', compact('posts'));
     }
 }

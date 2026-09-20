@@ -1,7 +1,7 @@
 <x-welcome-layout>
 
     <div class="py-12">
-        <section class="bg-cover" style="background-image: url({{ asset('storage/welcome/banner-principal.jpeg') }})">
+        <section class="bg-cover" style="background-image: url({{ asset('img/dashboard/banner-principal.jpeg') }})">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-36">
                 <div class="w-full md:w-3/4 lg:w-1/2">
                     <h1 class="pt-6 text-black font-bold text-4xl">Desarrolla tus proyectos de manera customizada.</h1>
@@ -33,7 +33,7 @@
                 <article>
                     <figure>
                         <img class="rounded-xl h-36 w-full object-cover"
-                            src="{{ asset('storage/welcome/contenido-1.jpg') }}" alt="">
+                            src="{{ asset('img/dashboard/contenido-1.jpg') }}" alt="">
                     </figure>
                     <header class="mt-2">
                         <h1 class="text-center text-xl text-gray-700">Desarrollo Web</h1>
@@ -45,7 +45,7 @@
                 <article>
                     <figure>
                         <img class="rounded-xl h-36 w-full object-cover"
-                            src="{{ asset('storage/welcome/contenido-2.jpg') }}" alt="">
+                            src="{{ asset('img/dashboard/contenido-2.jpg') }}" alt="">
                     </figure>
                     <header class="mt-2">
                         <h1 class="text-center text-xl text-gray-700">Modúlos Gestión</h1>
@@ -57,7 +57,7 @@
                 <article>
                     <figure>
                         <img class="rounded-xl h-36 w-full object-cover"
-                            src="{{ asset('storage/welcome/contenido-3.jpg') }}" alt="">
+                            src="{{ asset('img/dashboard/contenido-3.jpg') }}" alt="">
                     </figure>
                     <header class="mt-2">
                         <h1 class="text-center text-xl text-gray-700">Gestión Ciclo Vida</h1>
@@ -69,7 +69,7 @@
                 <article>
                     <figure>
                         <img class="rounded-xl h-36 w-full object-cover"
-                            src="{{ asset('storage/welcome/contenido-4.jpg') }}" alt="">
+                            src="{{ asset('img/dashboard/contenido-4.jpg') }}" alt="">
                     </figure>
                     <header class="mt-2">
                         <h1 class="text-center text-xl text-gray-700">Desarrollo Personal</h1>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Welcome;
+namespace App\Livewire\Welcome;
 
 use App\Models\Level;
 use App\Models\Modules\Subjects\Science;

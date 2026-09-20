@@ -11,7 +11,7 @@
                 <article>
                     <figure>
                         <img class="rounded-xl h-36 w-full object-cover"
-                            src="{{ asset('storage/welcome/contenido-1.jpg') }}" alt="">
+                            src="{{ asset('img/dashboard/contenido-1.jpg') }}" alt="">
                     </figure>
                     <header class="mt-2">
                         <h1 class="text-center text-xl text-gray-700">Solicitudes</h1>
@@ -22,7 +22,7 @@
                 <article>
                     <figure>
                         <img class="rounded-xl h-36 w-full object-cover"
-                            src="{{ asset('storage/welcome/contenido-3.jpg') }}" alt="">
+                            src="{{ asset('img/dashboard/contenido-3.jpg') }}" alt="">
                     </figure>
                     <header class="mt-2">
                         <h1 class="text-center text-xl text-gray-700">Planes</h1>
@@ -33,7 +33,7 @@
                 <article>
                     <figure>
                         <img class="rounded-xl h-36 w-full object-cover"
-                            src="{{ asset('storage/welcome/contenido-4.jpg') }}" alt="">
+                            src="{{ asset('img/dashboard/contenido-4.jpg') }}" alt="">
                     </figure>
                     <header class="mt-2">
                         <h1 class="text-center text-xl text-gray-700">Requerimientos</h1>
