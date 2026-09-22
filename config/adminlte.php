@@ -255,17 +255,17 @@ return [
             'submenu' => [
                 [
                     'text'        => 'pepeSky',
-                    'url'         => 'https://www.pepesky.test',
+                    'url'         => 'https://pepesky.mewo',
                     'icon'        => 'fas fa-fw fa-blog',
                 ],
                 [
                     'text'        => 'manTcic Life',
-                    'url'         => 'https://www.mantcic-life.test',
+                    'url'         => 'http://mantcic-life.mewo',
                     'icon'        => 'fas fa-fw fa-blog',
                 ],
                 [
                     'text'        => 'Patio Sofista',
-                    'url'         => 'https://www.patio-sofista.test',
+                    'url'         => 'https://riquelme-cia.mewo',
                     'icon'        => 'fas fa-fw fa-blog',
                 ],
                 [
@@ -292,13 +292,13 @@ return [
                     'active' => ['admin/users*'],
                 ],
                 [
-                    'text'    => 'Procesos',
+                    'text'    => 'SyQuAc',
                     'route'    => 'admin.units.index',
                     'icon'    => 'fa-fw far fa-dot-circle',
                     'active' => ['admin/units*'],
                 ],
                 [
-                    'text'    => 'Herramientas',
+                    'text'    => 'MeWo',
                     'route'    => 'admin.roles.index',
                     'icon'    => 'far fa-fw fa-toolbox',
                     'active' => ['admin/roles*'],
@@ -349,7 +349,7 @@ return [
                     'active' => ['admin/activities*'],
                 ],
                 [
-                    'text' => 'Valorizaciones',
+                    'text' => 'Modelos',
                     'route'    => 'admin.ideas.index',
                     'icon' => 'fa-fw far fa-cash-register',
                     'active' => ['admin/ideas*'],
@@ -364,13 +364,13 @@ return [
             'icon' => 'fas fa-fw fa-cubes',
             'submenu' => [
                 [
-                    'text' => 'Estudios',
+                    'text' => 'Capacitación',
                     'route'  => 'admin.studies.index',
                     'icon'    => 'fa-fw fas fa-chalkboard-teacher',
                     'active' => ['admin/studies*'],
                 ],
                 [
-                    'text' => 'Blog',
+                    'text' => 'Comunicación',
                     'route'  => 'admin.blogs.index',
                     'icon' => 'far fa-fw fa-blog',
                     'active' => ['admin/blogs*'],
@@ -388,7 +388,7 @@ return [
                     'active' => ['admin/managements*'],
                 ],
                 [
-                    'text' => 'Contabilidad',
+                    'text' => 'Finanzas',
                     'route'  => 'admin.accountings.index',
                     'icon' => 'fa-fw fas fa-cash-register',
                     'active' => ['admin/accountings*'],
@@ -406,25 +406,29 @@ return [
                     'active' => ['admin/healts*'],
                 ],
                 [
-                    'text' => 'Almacen',
+                    'text' => 'Aprovisionamiento',
                     'route'  => 'admin.warehouses.index',
                     'icon' => 'fa-fw fas fa-warehouse',
                     'active' => ['admin/warehouses*'],
                 ],
                 [
-                    'text' => 'Venta',
+                    'text' => 'Comercial',
                     'route'  => 'admin.stores.index',
                     'icon'    => 'fa-fw fas fa-store',
                     'active' => ['admin/stores*'],
                 ],
                 [
-                    'text' => 'Diseño',
+                    'text' => 'Reflexividad',
                     'route'  => 'admin.designs.index',
                     'icon' => 'fa-fw fas fa-bezier-curve',
                     'active' => ['admin/designs*'],
                 ],
-
-
+                [
+                    'text' => 'Jurídico',
+                    'route'  => 'admin.designs.index',
+                    'icon' => 'fa-fw fas fa-bezier-curve',
+                    'active' => ['admin/designs*'],
+                ],
             ],
         ],
 
@@ -433,7 +437,7 @@ return [
 
         // *** Blog
         [
-            'text'    => 'Blog',
+            'text'    => 'Comunicación',
             'icon'    => 'far fa-fw fa-blog',
             'submenu' => [
                 [
@@ -453,7 +457,7 @@ return [
 
         // *** Developments
         [
-            'text'    => 'Desarrollos',
+            'text'    => 'Desarrollo',
             'icon'    => 'far fa-fw fa-code',
             'submenu' => [
                 [
@@ -477,7 +481,7 @@ return [
 
         // *** Studies
         [
-            'text'    => 'Estudios',
+            'text'    => 'Capacitación',
             'icon'    => 'fa-fw fas fa-chalkboard-teacher',
             'submenu' => [
                 [
@@ -517,7 +521,7 @@ return [
 
         // *** Accounting
         [
-            'text'    => 'Contabilidad',
+            'text'    => 'Finanzas',
             'icon'    => 'fa-fw fas fa-cash-register',
             'submenu' => [
                 [
@@ -565,7 +569,7 @@ return [
 
         // *** Store
         [
-            'text'    => 'Tienda',
+            'text'    => 'Comercial',
             'icon'    => 'fa-fw fas fa-store',
             'submenu' => [
                 [
@@ -605,7 +609,7 @@ return [
 
         // *** Warehouse
         [
-            'text'    => 'Almacen',
+            'text'    => 'Aprovisionamiento',
             'icon' => 'fa-fw fas fa-warehouse',
             'submenu' => [
                 [
@@ -629,7 +633,7 @@ return [
 
            // *** Designs
         [
-            'text'    => 'Diseño',
+            'text'    => 'Reflexividad',
             'icon' => 'fa-fw fas fa-bezier-curve',
             'submenu' => [
                 [
@@ -650,6 +654,29 @@ return [
                 ],
             ],
         ],
+
+[
+    'text'    => 'Jurídico',
+    'icon' => 'fa-fw fas fa-bezier-curve',
+    'submenu' => [
+        [
+            'text' => 'Jurisdicciones',
+            'url'  => '#',
+        ],
+        [
+            'text' => 'Assets',
+            'url'  => '#',
+        ],
+        [
+            'text' => 'Activities',
+            'url'  => '#',
+        ],
+        [
+            'text' => 'Confiability',
+            'url'  => '#',
+        ],
+    ],
+],
 
 
 

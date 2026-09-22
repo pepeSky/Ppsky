@@ -20,6 +20,5 @@ class UserSeeder extends Seeder
             'password' => bcrypt('kudkug-4byWra-zobnar')
         ]);
 
-        User::factory(10)->create();
     }
 }
