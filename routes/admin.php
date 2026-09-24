@@ -14,7 +14,6 @@ use App\Http\Controllers\Admin\EntityController;
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\IdeaController;
-
 use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Admin\Modules\StudyController;
 use App\Http\Controllers\Admin\Modules\BlogController;
@@ -40,6 +39,8 @@ use App\Http\Controllers\Admin\Modules\Resource_Interaction\SupportController;
 use App\Http\Controllers\Admin\Modules\Study\SubjectController;
 
 use App\Http\Controllers\Admin\Modules\Development\TaskController;
+
+use App\Http\Controllers\Admin\SyQuAc\UfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,15 @@ Route::resource('stores', StoreController::class)->names('admin.stores');
 Route::resource('warehouses', WarehouseController::class)->names('admin.warehouses');
 Route::resource('designs', DesignController::class)->names('admin.designs');
 
+
+Route::get('/syquac/uf', [UfController::class, 'index'])
+    ->name('admin.syquac.uf.index');
+
+Route::post('/syquac/uf/sincronizar',[UfController::class,'sincronizar'])
+    ->name('admin.syquac.uf.sincronizar');
+
+Route::get('/syquac/uf/{uf}', [UfController::class, 'show'])
+    ->name('admin.syquac.uf.show');
 
 
 

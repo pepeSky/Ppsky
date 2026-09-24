@@ -325,9 +325,9 @@ return [
             ],
         ],
 
-        // Administrador
+        // MeWo
         [
-            'text'    => 'Administrador',
+            'text'    => 'MeWo',
             'icon'    => 'fas fa-fw fa-user-tie',
             'submenu' => [
                 [
@@ -358,77 +358,24 @@ return [
             ],
         ],
 
-        // Modulos
+        // SyQuAc
         [
-            'text'    => 'Modulos',
+            'text'    => 'SyQuAc',
             'icon' => 'fas fa-fw fa-cubes',
             'submenu' => [
                 [
-                    'text' => 'Capacitación',
+                    'text' => 'Fundamentos',
                     'route'  => 'admin.studies.index',
                     'icon'    => 'fa-fw fas fa-chalkboard-teacher',
                     'active' => ['admin/studies*'],
                 ],
                 [
-                    'text' => 'Comunicación',
-                    'route'  => 'admin.blogs.index',
+                    'text' => 'UF',
+                    'route'  => 'admin.syquac.uf.index',
                     'icon' => 'far fa-fw fa-blog',
                     'active' => ['admin/blogs*'],
                 ],
-                [
-                    'text' => 'Desarrollo',
-                    'route'  => 'admin.developments.index',
-                    'icon' => 'far fa-fw fa-code',
-                    'active' => ['admin/developments*'],
-                ],
-                [
-                    'text' => 'Administración',
-                    'route'  => 'admin.managements.index',
-                    'icon' => 'far fa-fw fa-user-tie',
-                    'active' => ['admin/managements*'],
-                ],
-                [
-                    'text' => 'Finanzas',
-                    'route'  => 'admin.accountings.index',
-                    'icon' => 'fa-fw fas fa-cash-register',
-                    'active' => ['admin/accountings*'],
-                ],
-                [
-                    'text' => 'Mantenimiento',
-                    'route'  => 'admin.mantenances.index',
-                    'icon'    => 'fa-fw fas fa-toolbox',
-                    'active' => ['admin/mantenances*'],
-                ],
-                [
-                    'text' => 'Salud',
-                    'route'  => 'admin.healts.index',
-                    'icon' => 'fa-fw fas fa-heartbeat',
-                    'active' => ['admin/healts*'],
-                ],
-                [
-                    'text' => 'Aprovisionamiento',
-                    'route'  => 'admin.warehouses.index',
-                    'icon' => 'fa-fw fas fa-warehouse',
-                    'active' => ['admin/warehouses*'],
-                ],
-                [
-                    'text' => 'Comercial',
-                    'route'  => 'admin.stores.index',
-                    'icon'    => 'fa-fw fas fa-store',
-                    'active' => ['admin/stores*'],
-                ],
-                [
-                    'text' => 'Reflexividad',
-                    'route'  => 'admin.designs.index',
-                    'icon' => 'fa-fw fas fa-bezier-curve',
-                    'active' => ['admin/designs*'],
-                ],
-                [
-                    'text' => 'Jurídico',
-                    'route'  => 'admin.designs.index',
-                    'icon' => 'fa-fw fas fa-bezier-curve',
-                    'active' => ['admin/designs*'],
-                ],
+                
             ],
         ],
 

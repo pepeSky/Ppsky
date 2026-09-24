@@ -30,4 +30,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'bcentral' => [
+        'url' => env(
+        'BCENTRAL_URL',
+        'https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx'),
+        'token' => env('BCENTRAL_TOKEN'),
+    ],
+
 ];
