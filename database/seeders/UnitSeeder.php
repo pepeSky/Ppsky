@@ -14,39 +14,19 @@ class UnitSeeder extends Seeder
      */
     public function run()
     {
-        Unit::create([
-            'name' => 'Negocio',
-            'symbol' => 'UnNe',
-        ]);
+        // Conservar el ID de Negocio cuando proviene del cargador anterior.
+        if (! Unit::where('symbol', 'UnNE')->exists()) {
+            Unit::where('symbol', 'UnNe')->update(['symbol' => 'UnNE']);
+        }
 
-        Unit::create([
-            'name' => 'Servicio',
-            'symbol' => 'UnSe',
-        ]);
-
-        Unit::create([
-            'name' => 'Soporte',
-            'symbol' => 'UnSo',
-        ]);
-
-        Unit::create([
-            'name' => 'Operativa',
-            'symbol' => 'UnOp',
-        ]);
-
-        Unit::create([
-            'name' => 'Elemental Nivel 1',
-            'symbol' => 'UnEl_Niv1',
-        ]);
-
-        Unit::create([
-            'name' => 'Elemental Nivel 2',
-            'symbol' => 'UnEl_Niv2',
-        ]);
-
-        Unit::create([
-            'name' => 'Elemental Nivel 3',
-            'symbol' => 'UnEl_Niv3',
-        ]);
+        foreach ([
+            'UnNE' => 'Negocio',
+            'UnSe' => 'Servicio',
+            'UnSo' => 'Soporte',
+            'UnOp' => 'Operativa',
+            'UnEl' => 'Elemental',
+        ] as $symbol => $name) {
+            Unit::updateOrCreate(['symbol' => $symbol], ['name' => $name]);
+        }
     }
 }

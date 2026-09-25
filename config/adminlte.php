@@ -304,7 +304,7 @@ return [
                     'text'    => 'Entidades',
                     'route'    => 'admin.roles.index',
                     'icon'    => 'fa-fw far fa-dot-circle',
-                    'active' => ['admin/units*'],
+                    'active' => ['admin/roles*'],
                 ],
                 [
                     'text'    => 'Elementos',
@@ -382,7 +382,7 @@ return [
                     'text' => 'UF',
                     'route'  => 'admin.syquac.uf.index',
                     'icon' => 'far fa-fw fa-blog',
-                    'active' => ['admin/blogs*'],
+                    'active' => ['admin/syquac/uf*'],
                 ],
                 
             ],

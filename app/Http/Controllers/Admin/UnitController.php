@@ -15,7 +15,7 @@ class UnitController extends Controller
      */
     public function index()
     {
-        $units = Unit::all();
+        $units = Unit::orderBy('id')->paginate(20);
 
         return view('admin.units.index', compact('units'));
     }
@@ -38,7 +38,12 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'symbol' => ['required', 'string', 'max:255', 'unique:units,symbol'],
+        ]);
+        Unit::create($validated);
+        return redirect()->route('admin.units.index')->with('info', 'Unidad creada correctamente.');
     }
 
     /**
@@ -72,7 +77,12 @@ class UnitController extends Controller
      */
     public function update(Request $request, Unit $unit)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'symbol' => ['required', 'string', 'max:255', 'unique:units,symbol,'.$unit->id],
+        ]);
+        $unit->update($validated);
+        return redirect()->route('admin.units.index')->with('info', 'Unidad modificada correctamente.');
     }
 
     /**
@@ -83,6 +93,7 @@ class UnitController extends Controller
      */
     public function destroy(Unit $unit)
     {
-        //
+        $unit->delete();
+        return redirect()->route('admin.units.index')->with('info', 'Unidad eliminada correctamente.');
     }
 }
