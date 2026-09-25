@@ -46,11 +46,14 @@ return [
     */
 
     'logo' => null,
-    'logo_img' => 'vendor/adminlte/dist/img/ppsky.png',
-    'logo_img_class' => 'flex img-responsive',
+
+    'logo_img' => 'img/logo-pepesky.png',
+    'logo_img_class' => 'brand-image pepesky-admin-logo',
+
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'AdminLTE',
+
+    'logo_img_alt' => 'PepeSky',
 
     /*
     |--------------------------------------------------------------------------
@@ -283,8 +286,14 @@ return [
         // Sistema
         [
             'text'    => 'Sistema',
-            'icon'    => 'fa-fw fab fa-battle-net',
+            'icon'    => 'fas fa-fw fa-user-tie',
             'submenu' => [
+                [
+                    'text'    => 'Documentación',
+                    'route'    => 'admin.roles.index',
+                    'icon'    => 'fas fa-fw fa-file',
+                    'active' => ['admin/roles*'],
+                ],
                 [
                     'text' => 'Actores',
                     'route'  => 'admin.users.index',
@@ -292,21 +301,15 @@ return [
                     'active' => ['admin/users*'],
                 ],
                 [
-                    'text'    => 'SyQuAc',
-                    'route'    => 'admin.units.index',
+                    'text'    => 'Entidades',
+                    'route'    => 'admin.roles.index',
                     'icon'    => 'fa-fw far fa-dot-circle',
                     'active' => ['admin/units*'],
                 ],
                 [
-                    'text'    => 'MeWo',
+                    'text'    => 'Elementos',
                     'route'    => 'admin.roles.index',
                     'icon'    => 'far fa-fw fa-toolbox',
-                    'active' => ['admin/roles*'],
-                ],
-                [
-                    'text'    => 'Documentación',
-                    'route'    => 'admin.roles.index',
-                    'icon'    => 'fas fa-fw fa-file',
                     'active' => ['admin/roles*'],
                 ],
                 [
@@ -328,7 +331,7 @@ return [
         // MeWo
         [
             'text'    => 'MeWo',
-            'icon'    => 'fas fa-fw fa-user-tie',
+            'icon'    => 'fas fa-fw fa-cubes',
             'submenu' => [
                 [
                     'text' => 'Bitácora',
@@ -361,10 +364,16 @@ return [
         // SyQuAc
         [
             'text'    => 'SyQuAc',
-            'icon' => 'fas fa-fw fa-cubes',
+            'icon' => 'fa-fw fab fa-battle-net',
             'submenu' => [
                 [
-                    'text' => 'Fundamentos',
+                    'text'    => 'Unidades',
+                    'route'    => 'admin.units.index',
+                    'icon'    => 'fa-fw far fa-dot-circle',
+                    'active' => ['admin/units*'],
+                ],
+                [
+                    'text' => 'Cuantías',
                     'route'  => 'admin.studies.index',
                     'icon'    => 'fa-fw fas fa-chalkboard-teacher',
                     'active' => ['admin/studies*'],
@@ -749,6 +758,16 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'PepeSky' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'css/pepesky-admin.css',
                 ],
             ],
         ],
