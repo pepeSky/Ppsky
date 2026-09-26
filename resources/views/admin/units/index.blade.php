@@ -6,11 +6,11 @@
     @if (session('info')) <div class="alert alert-success">{{ session('info') }}</div> @endif
     <div class="card"><div class="card-body table-responsive">
         <table class="table table-striped">
-            <thead><tr><th>ID</th><th>Nombre</th><th>Símbolo</th><th>Acciones</th></tr></thead>
+            <thead><tr><th>ID</th><th>Instante</th><th>Nombre</th><th>Magnitud</th><th>Sistema</th><th>Símbolo</th><th>Tipo</th><th>Acciones</th></tr></thead>
             <tbody>
                 @forelse ($units as $unit)
                     <tr>
-                        <td>{{ $unit->id }}</td><td>{{ $unit->name }}</td><td>{{ $unit->symbol }}</td>
+                        <td>{{ $unit->id }}</td><td>{{ $unit->created_at?->format('d-m-Y H:i:s') }}</td><td>{{ $unit->name }}</td><td>{{ $unit->magnitude }}</td><td>{{ $unit->system }}</td><td>{{ $unit->symbol }}</td><td>{{ $unit->type }}</td>
                         <td class="text-nowrap">
                             <a class="btn btn-outline-secondary btn-sm" href="{{ route('admin.units.show', $unit) }}">Ver</a>
                             <a class="btn btn-primary btn-sm" href="{{ route('admin.units.edit', $unit) }}">Modificar</a>
@@ -21,7 +21,7 @@
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="4" class="text-center">No hay unidades registradas.</td></tr>
+                    <tr><td colspan="8" class="text-center">No hay unidades registradas.</td></tr>
                 @endforelse
             </tbody>
         </table>

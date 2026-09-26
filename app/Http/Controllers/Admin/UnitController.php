@@ -40,7 +40,10 @@ class UnitController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'symbol' => ['required', 'string', 'max:255', 'unique:units,symbol'],
+            'symbol' => ['required', 'string', 'max:255'],
+            'magnitude' => ['nullable', 'string', 'max:255'],
+            'system' => ['nullable', 'string', 'max:255'],
+            'type' => ['nullable', 'string', 'max:255'],
         ]);
         Unit::create($validated);
         return redirect()->route('admin.units.index')->with('info', 'Unidad creada correctamente.');
@@ -79,7 +82,10 @@ class UnitController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'symbol' => ['required', 'string', 'max:255', 'unique:units,symbol,'.$unit->id],
+            'symbol' => ['required', 'string', 'max:255'],
+            'magnitude' => ['nullable', 'string', 'max:255'],
+            'system' => ['nullable', 'string', 'max:255'],
+            'type' => ['nullable', 'string', 'max:255'],
         ]);
         $unit->update($validated);
         return redirect()->route('admin.units.index')->with('info', 'Unidad modificada correctamente.');

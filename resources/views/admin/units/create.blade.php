@@ -13,6 +13,13 @@
                 <input id="symbol" name="symbol" class="form-control @error('symbol') is-invalid @enderror" value="{{ old('symbol') }}" required maxlength="255">
                 @error('symbol') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
+            @foreach (['magnitude' => 'Magnitud', 'system' => 'Sistema', 'type' => 'Tipo'] as $field => $label)
+                <div class="form-group">
+                    <label for="{{ $field }}">{{ $label }}</label>
+                    <input id="{{ $field }}" name="{{ $field }}" class="form-control @error($field) is-invalid @enderror" value="{{ old($field) }}" maxlength="255">
+                    @error($field) <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+            @endforeach
             <button class="btn btn-primary" type="submit">Guardar</button>
             <a class="btn btn-secondary" href="{{ route('admin.units.index') }}">Cancelar</a>
         </form>
