@@ -89,7 +89,31 @@ class User extends Authenticatable
     public function posts(){
         return $this->hasMany('App\Models\Post');
     }
+    
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
+    
+    public function identities()
+    {
+        return $this->hasMany(Identity::class);
+    }
 
+    public function actors()
+    {
+        return $this->hasMany(Actor::class);
+    }
+
+    public function models()
+    {
+        return $this->hasMany(Model::class);
+    }
+    
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
 
     //** Relación muchos a muchos **//
     public function developments_enrolled(){
@@ -99,6 +123,8 @@ class User extends Authenticatable
     public function processes(){
         return $this->belongsToMany('App\Models\Process');
     }
+    
+    
 
 
 }

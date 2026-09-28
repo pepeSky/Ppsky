@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Cohesion extends Model
+{
+    protected $guarded = ['id'];
+
+    public function interactions()
+    {
+        return $this->hasMany(Interaction::class);
+    }
+}
