@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminController;
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
@@ -58,6 +59,7 @@ Route::get('/', [AdminController::class, 'index'])->name('admin.home');
 
 Route::resource('users', UserController::class)->names('admin.users');
 Route::resource('roles', RoleController::class)->names('admin.roles');
+Route::resource('applications', ApplicationController::class)->names('admin.applications');
 Route::resource('units', UnitController::class)->names('admin.units');
 Route::resource('categories', CategoryController::class)->names('admin.categories');
 Route::resource('tags', TagController::class)->names('admin.tags');

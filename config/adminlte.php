@@ -313,6 +313,12 @@ return [
                     'active' => ['admin/roles*'],
                 ],
                 [
+                    'text' => 'Aplicaciones',
+                    'route' => 'admin.applications.index',
+                    'icon' => 'fas fa-fw fa-desktop',
+                    'active' => ['admin/applications*'],
+                ],
+                [
                     'text' => 'Categorias',
                     'route'  => 'admin.categories.index',
                     'icon' => 'fab fa-fw fa-buffer',
