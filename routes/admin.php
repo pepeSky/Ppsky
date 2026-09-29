@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\IdentityController;
 use App\Http\Controllers\Admin\ActorController;
 use App\Http\Controllers\Admin\InteractionController;
+use App\Http\Controllers\Admin\DocumentController;
 
 use App\Http\Controllers\Admin\EntityController;
 use App\Http\Controllers\Admin\ActivityController;
@@ -72,7 +73,7 @@ Route::resource('applications', ApplicationController::class)->names('admin.appl
 Route::resource('units', UnitController::class)->names('admin.units');
 Route::resource('categories', CategoryController::class)->names('admin.categories');
 Route::resource('tags', TagController::class)->names('admin.tags');
-
+Route::resource('documents', DocumentController::class)->names('admin.documents');
 
 Route::resource('entities', EntityController::class)->names('admin.entities');
 Route::resource('activities', ActivityController::class)->names('admin.activities');
