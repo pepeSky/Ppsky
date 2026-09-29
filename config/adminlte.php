@@ -289,48 +289,23 @@ return [
             'icon'    => 'fas fa-fw fa-user-tie',
             'submenu' => [
                 [
+                    'text' => 'Actores',
+                    'route'  => 'admin.actors.index',
+                    'icon' => 'fas fa-users fa-fw',
+                    'active' => ['admin/actors*'],
+                ],
+                [
+                    'text'   => 'Aplicaciones',
+                    'route'  => 'admin.applications.index',
+                    'icon'   => 'fas fa-fw fa-desktop',
+                    'active' => ['admin/applications*'],
+                ],
+                [
                     'text'    => 'Documentación',
                     'route'    => 'admin.roles.index',
                     'icon'    => 'fas fa-fw fa-file',
                     'active' => ['admin/roles*'],
                 ],
-                [
-                    'text' => 'Actores',
-                    'route'  => 'admin.users.index',
-                    'icon' => 'fas fa-users fa-fw',
-                    'active' => ['admin/users*'],
-                ],
-                [
-                    'text'    => 'Entidades',
-                    'route'    => 'admin.roles.index',
-                    'icon'    => 'fa-fw far fa-dot-circle',
-                    'active' => ['admin/roles*'],
-                ],
-                [
-                    'text'    => 'Elementos',
-                    'route'    => 'admin.roles.index',
-                    'icon'    => 'far fa-fw fa-toolbox',
-                    'active' => ['admin/roles*'],
-                ],
-                [
-                    'text' => 'Aplicaciones',
-                    'route' => 'admin.applications.index',
-                    'icon' => 'fas fa-fw fa-desktop',
-                    'active' => ['admin/applications*'],
-                ],
-                [
-                    'text' => 'Categorias',
-                    'route'  => 'admin.categories.index',
-                    'icon' => 'fab fa-fw fa-buffer',
-                    'active' => ['admin/categories*'],
-                ],
-                [
-                    'text' => 'Etiquetas',
-                    'route'  => 'admin.tags.index',
-                    'icon' => 'fas fa-fw fa-tags',
-                    'active' => ['admin/tags*'],
-                ],
-
             ],
         ],
 

@@ -1,16 +1,17 @@
+
 <x-admin-layout>
 
     <x-slot name="content_header">
-        <a href="{{ route('admin.entities.create') }}"
+        <a href="{{ route('admin.identities.create') }}"
            class="btn btn-primary float-right">
-            Agregar Entidad
+            Agregar Identidad
         </a>
 
-        <h1>Entidades</h1>
+        <h1>Identidades</h1>
 
         <p>
-            Elementos identificados y reconocidos dentro del sistema de
-            información, clasificados según su naturaleza.
+            Entidades identificadas y reconocidas por el usuario
+            dentro de su sistema de información.
         </p>
     </x-slot>
 
@@ -27,44 +28,46 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nombre</th>
+                        <th>Entidad</th>
                         <th>Código</th>
                         <th>Naturaleza</th>
-                        <th>Tipos</th>
+                        <th>Identificación</th>
+                        <th>Actor</th>
                         <th></th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @forelse ($entities as $entity)
+                    @forelse ($identities as $identity)
                         <tr>
-                            <td>{{ $entity->id }}</td>
-                            <td>{{ $entity->name }}</td>
-                            <td>{{ $entity->code ?? '—' }}</td>
-                            <td>{{ $entity->nature->name }}</td>
+                            <td>{{ $identity->id }}</td>
+                            <td>{{ $identity->entity->name }}</td>
+                            <td>{{ $identity->entity->code ?? '—' }}</td>
+                            <td>{{ $identity->entity->nature->name }}</td>
+                            <td>{{ $identity->identification ?? '—' }}</td>
 
                             <td>
-                                @forelse ($entity->types as $type)
-                                    <span class="badge badge-secondary">
-                                        {{ $type->name }}
+                                @if ($identity->actor)
+                                    <span class="badge badge-success">
+                                        Sí
                                     </span>
-                                @empty
+                                @else
                                     —
-                                @endforelse
+                                @endif
                             </td>
 
                             <td class="text-right">
-                                <a href="{{ route('admin.entities.show', $entity) }}"
+                                <a href="{{ route('admin.identities.show', $identity) }}"
                                    class="btn btn-sm btn-info">
                                     Ver
                                 </a>
 
-                                <a href="{{ route('admin.entities.edit', $entity) }}"
+                                <a href="{{ route('admin.identities.edit', $identity) }}"
                                    class="btn btn-sm btn-warning">
                                     Editar
                                 </a>
 
-                                <form action="{{ route('admin.entities.destroy', $entity) }}"
+                                <form action="{{ route('admin.identities.destroy', $identity) }}"
                                       method="POST"
                                       class="d-inline">
                                     @csrf
@@ -72,7 +75,7 @@
 
                                     <button type="submit"
                                             class="btn btn-sm btn-danger"
-                                            onclick="return confirm('¿Eliminar esta entidad?')">
+                                            onclick="return confirm('¿Eliminar esta identidad?')">
                                         Eliminar
                                     </button>
                                 </form>
@@ -80,8 +83,8 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center">
-                                No existen entidades registradas.
+                            <td colspan="7" class="text-center">
+                                No existen identidades registradas.
                             </td>
                         </tr>
                     @endforelse
@@ -91,6 +94,6 @@
         </div>
     </div>
 
-    {{ $entities->links() }}
+    {{ $identities->links() }}
 
 </x-admin-layout>

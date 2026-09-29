@@ -10,6 +10,9 @@ use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\IdentityController;
+use App\Http\Controllers\Admin\ActorController;
+use App\Http\Controllers\Admin\InteractionController;
 
 use App\Http\Controllers\Admin\EntityController;
 use App\Http\Controllers\Admin\ActivityController;
@@ -57,6 +60,12 @@ use App\Http\Controllers\Admin\SyQuAc\UfController;
 
 Route::get('/', [AdminController::class, 'index'])->name('admin.home');
 
+Route::get('/syquac/uf', [UfController::class, 'index'])->name('admin.syquac.uf.index');
+
+Route::post('/syquac/uf/sincronizar',[UfController::class,'sincronizar'])->name('admin.syquac.uf.sincronizar');
+
+Route::get('/syquac/uf/{uf}', [UfController::class, 'show'])->name('admin.syquac.uf.show');
+
 Route::resource('users', UserController::class)->names('admin.users');
 Route::resource('roles', RoleController::class)->names('admin.roles');
 Route::resource('applications', ApplicationController::class)->names('admin.applications');
@@ -69,8 +78,8 @@ Route::resource('entities', EntityController::class)->names('admin.entities');
 Route::resource('activities', ActivityController::class)->names('admin.activities');
 Route::resource('posts', PostController::class)->names('admin.posts');
 Route::resource('ideas', IdeaController::class)->names('admin.ideas');
-
-
+Route::resource('interactions', InteractionController::class)->names('admin.interactions');
+Route::resource('identities', IdentityController::class)->names('admin.identities');
 Route::resource('modules', ModuleController::class)->names('admin.modules');
 Route::resource('studies', StudyController::class )->names('admin.studies');
 Route::resource('blogs', BlogController::class )->names('admin.blogs');
@@ -84,18 +93,8 @@ Route::resource('warehouses', WarehouseController::class)->names('admin.warehous
 Route::resource('designs', DesignController::class)->names('admin.designs');
 
 
-Route::get('/syquac/uf', [UfController::class, 'index'])
-    ->name('admin.syquac.uf.index');
 
-Route::post('/syquac/uf/sincronizar',[UfController::class,'sincronizar'])
-    ->name('admin.syquac.uf.sincronizar');
-
-Route::get('/syquac/uf/{uf}', [UfController::class, 'show'])
-    ->name('admin.syquac.uf.show');
-
-
-
-
+Route::resource('actors', ActorController::class)->names('admin.actors');
 
 /*
 |--------------------------------------------------------------------------

@@ -1,16 +1,16 @@
 <x-admin-layout>
 
     <x-slot name="content_header">
-        <a href="{{ route('admin.entities.create') }}"
+        <a href="{{ route('admin.interactions.create') }}"
            class="btn btn-primary float-right">
-            Agregar Entidad
+            Agregar Interacción
         </a>
 
-        <h1>Entidades</h1>
+        <h1>Interacciones</h1>
 
         <p>
-            Elementos identificados y reconocidos dentro del sistema de
-            información, clasificados según su naturaleza.
+            Relaciones recíprocas establecidas entre actores,
+            clasificadas según su forma de cohesión.
         </p>
     </x-slot>
 
@@ -27,61 +27,71 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Código</th>
-                        <th>Naturaleza</th>
-                        <th>Tipos</th>
+                        <th>Actor</th>
+                        <th></th>
+                        <th>Actor</th>
+                        <th>Cohesión</th>
+                        <th>Símbolo</th>
                         <th></th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @forelse ($entities as $entity)
+                    @forelse ($interactions as $interaction)
                         <tr>
-                            <td>{{ $entity->id }}</td>
-                            <td>{{ $entity->name }}</td>
-                            <td>{{ $entity->code ?? '—' }}</td>
-                            <td>{{ $entity->nature->name }}</td>
+                            <td>{{ $interaction->id }}</td>
 
                             <td>
-                                @forelse ($entity->types as $type)
-                                    <span class="badge badge-secondary">
-                                        {{ $type->name }}
-                                    </span>
-                                @empty
-                                    —
-                                @endforelse
+                                {{ $interaction->actorA->identity->entity->name }}
+                            </td>
+
+                            <td class="text-center">
+                                ↔
+                            </td>
+
+                            <td>
+                                {{ $interaction->actorB->identity->entity->name }}
+                            </td>
+
+                            <td>
+                                {{ $interaction->cohesion->name }}
+                            </td>
+
+                            <td>
+                                {{ $interaction->cohesion->symbol ?? '—' }}
                             </td>
 
                             <td class="text-right">
-                                <a href="{{ route('admin.entities.show', $entity) }}"
+                                <a href="{{ route('admin.interactions.show', $interaction) }}"
                                    class="btn btn-sm btn-info">
                                     Ver
                                 </a>
 
-                                <a href="{{ route('admin.entities.edit', $entity) }}"
+                                <a href="{{ route('admin.interactions.edit', $interaction) }}"
                                    class="btn btn-sm btn-warning">
                                     Editar
                                 </a>
 
-                                <form action="{{ route('admin.entities.destroy', $entity) }}"
+                                <form action="{{ route('admin.interactions.destroy', $interaction) }}"
                                       method="POST"
                                       class="d-inline">
+
                                     @csrf
                                     @method('DELETE')
 
                                     <button type="submit"
                                             class="btn btn-sm btn-danger"
-                                            onclick="return confirm('¿Eliminar esta entidad?')">
+                                            onclick="return confirm('¿Eliminar esta interacción?')">
                                         Eliminar
                                     </button>
                                 </form>
                             </td>
                         </tr>
+
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center">
-                                No existen entidades registradas.
+                            <td colspan="7" class="text-center">
+                                No existen interacciones registradas.
                             </td>
                         </tr>
                     @endforelse
@@ -91,6 +101,6 @@
         </div>
     </div>
 
-    {{ $entities->links() }}
+    {{ $interactions->links() }}
 
 </x-admin-layout>

@@ -100,11 +100,6 @@ class User extends Authenticatable
         return $this->hasMany(Identity::class);
     }
 
-    public function actors()
-    {
-        return $this->hasMany(Actor::class);
-    }
-
     public function models()
     {
         return $this->hasMany(Model::class);

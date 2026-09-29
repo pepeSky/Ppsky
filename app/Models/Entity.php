@@ -11,9 +11,19 @@ class Entity extends Model
 
     protected $guarded = ['id'];
 
-
-    //** Relación uno a uno polimorfica  **//
-    public function category(){
-        return $this->morphOne('App\Models\Category','categoryable');
+    public function nature()
+    {
+        return $this->belongsTo(Nature::class);
+    }
+    
+    public function types()
+    {
+        return $this->belongsToMany(Type::class)
+            ->withTimestamps();
+    }
+    
+    public function identities()
+    {
+        return $this->hasMany(Identity::class);
     }
 }
