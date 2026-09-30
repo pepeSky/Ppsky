@@ -22,4 +22,9 @@ class Identity extends Model
     {
         return $this->hasOne(Actor::class);
     }
+
+    public function system()
+    {
+        return $this->hasOne(System::class);
+    }
 }

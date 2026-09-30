@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\IdentityController;
 use App\Http\Controllers\Admin\ActorController;
 use App\Http\Controllers\Admin\InteractionController;
 use App\Http\Controllers\Admin\DocumentController;
-
+use App\Http\Controllers\Admin\SystemController;
 use App\Http\Controllers\Admin\EntityController;
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\PostController;
@@ -62,10 +62,10 @@ use App\Http\Controllers\Admin\SyQuAc\UfController;
 Route::get('/', [AdminController::class, 'index'])->name('admin.home');
 
 Route::get('/syquac/uf', [UfController::class, 'index'])->name('admin.syquac.uf.index');
-
-Route::post('/syquac/uf/sincronizar',[UfController::class,'sincronizar'])->name('admin.syquac.uf.sincronizar');
-
 Route::get('/syquac/uf/{uf}', [UfController::class, 'show'])->name('admin.syquac.uf.show');
+Route::post('/syquac/uf/sincronizar',[UfController::class,'sincronizar'])->name('admin.syquac.uf.sincronizar');
+Route::post('/system/active', [SystemController::class, 'active'])->name('admin.system.active');
+
 
 Route::resource('users', UserController::class)->names('admin.users');
 Route::resource('roles', RoleController::class)->names('admin.roles');

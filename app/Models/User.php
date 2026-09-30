@@ -119,7 +119,10 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Process');
     }
     
-    
-
+    public function systems()
+    {
+        return $this->belongsToMany(System::class)
+            ->withTimestamps();
+    }
 
 }
