@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Context extends Model
+class MewoProcess extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    public function mewoProcesses()
+    public function context()
     {
-         return $this->hasMany(MewoProcess::class);
+        return $this->belongsTo(Context::class);
     }
 }
