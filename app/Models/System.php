@@ -21,4 +21,9 @@ class System extends Model
         return $this->belongsToMany(User::class)
             ->withTimestamps();
     }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }
