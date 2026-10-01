@@ -15,4 +15,9 @@ class Project extends Model
     {
         return $this->belongsTo(System::class);
     }
+
+    public function plans()
+    {
+        return $this->hasMany(Plan::class);
+    }
 }
