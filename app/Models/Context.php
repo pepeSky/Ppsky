@@ -15,4 +15,9 @@ class Context extends Model
     {
          return $this->hasMany(MewoProcess::class);
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'context_id');
+    }
 }

@@ -9,7 +9,17 @@ class Task extends Model
 {
     use HasFactory;
 
+    protected $table = 'task';
+
     protected $guarded = ['id'];
 
+    public function activity()
+    {
+        return $this->belongsTo(Activity::class);
+    }
 
+    public function context()
+    {
+        return $this->belongsTo(Context::class);
+    }
 }

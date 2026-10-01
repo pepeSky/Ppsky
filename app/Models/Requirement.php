@@ -15,9 +15,4 @@ class Requirement extends Model
      public function development(){
         return $this->belongsTo('App\Models\Development');
     }
-
-    // Relación 1:N
-    public function objetives(){
-        return $this->hasMany('App\Models\Objetive');
-    }
 }

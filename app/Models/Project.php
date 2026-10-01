@@ -21,8 +21,13 @@ class Project extends Model
         return $this->hasMany(Plan::class);
     }
 
-    public function goals()
+    public function objetives()
     {
-        return $this->hasMany(Goal::class);
+        return $this->hasMany(Objetive::class);
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
     }
 }

@@ -11,11 +11,6 @@ class Goal extends Model
 
     protected $guarded = ['id'];
 
-    public function project()
-    {
-        return $this->belongsTo(Project::class);
-    }
-
     public function objetives()
     {
         return $this->hasMany(Objetive::class);

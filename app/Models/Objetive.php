@@ -11,13 +11,18 @@ class Objetive extends Model
 
     protected $guarded = ['id'];
 
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
     public function goal()
     {
         return $this->belongsTo(Goal::class);
     }
 
-    public function requirement()
+    public function activities()
     {
-        return $this->belongsTo(Requirement::class);
+        return $this->belongsToMany(Activity::class);
     }
 }
