@@ -11,13 +11,13 @@ class Objetive extends Model
 
     protected $guarded = ['id'];
 
-    // Relación 1:N Inversa
-    public function goal(){
-        return $this->belongsTo('App\Models\Goal');
+    public function goal()
+    {
+        return $this->belongsTo(Goal::class);
     }
 
-    // Relación 1:N Inversa
-    public function Requirement(){
-        return $this->belongsTo('App\Models\Requirement');
+    public function requirement()
+    {
+        return $this->belongsTo(Requirement::class);
     }
 }
