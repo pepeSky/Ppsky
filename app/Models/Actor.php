@@ -23,4 +23,9 @@ class Actor extends Model
     {
         return $this->hasMany(Interaction::class, 'actor_b_id');
     }
+
+    public function propositions()
+    {
+        return $this->hasMany(Proposition::class);
+    }
 }
