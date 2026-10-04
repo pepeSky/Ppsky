@@ -24,4 +24,10 @@ class ProjectRecord extends Model
     {
         return $this->belongsTo(Actor::class);
     }
+
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class)
+            ->withTimestamps();
+    }
 }
