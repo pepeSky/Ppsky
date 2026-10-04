@@ -30,4 +30,10 @@ class Project extends Model
     {
         return $this->hasMany(Activity::class);
     }
+
+    public function records()
+    {
+        return $this->hasMany(ProjectRecord::class)
+            ->orderBy('occurred_at');
+    }
 }
