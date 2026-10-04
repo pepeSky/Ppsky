@@ -37,19 +37,4 @@ class WorkUnit extends Model
         return $this->belongsTo(Unit::class);
     }
 
-    /**
-     * Unidad de trabajo superior, cuando corresponda.
-     */
-    public function parent()
-    {
-        return $this->belongsTo(WorkUnit::class, 'parent_id');
-    }
-
-    /**
-     * Unidades de trabajo dependientes.
-     */
-    public function children()
-    {
-        return $this->hasMany(WorkUnit::class, 'parent_id');
-    }
 }
