@@ -12,6 +12,7 @@ class ProjectDossierController extends Controller
         $project->load([
             'system.identity.entity',
             'records.actor.identity.entity',
+            'records.documents',
             'documents.system.identity.entity',
         ]);
 

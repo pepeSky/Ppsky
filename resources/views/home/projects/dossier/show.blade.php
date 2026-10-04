@@ -54,6 +54,23 @@
                                 {{ $record->description }}
                             </div>
 
+@if ($record->documents->isNotEmpty())
+    <div class="mt-4">
+
+        <div class="text-sm font-semibold text-gray-600">
+            Documentos
+        </div>
+
+        <ul class="mt-2 space-y-1">
+            @foreach ($record->documents as $document)
+                <li class="text-sm text-gray-700">
+                    {{ $document->name }}
+                </li>
+            @endforeach
+        </ul>
+
+    </div>
+@endif
                         </div>
                     @empty
                         <p class="text-gray-500">
