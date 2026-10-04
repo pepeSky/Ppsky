@@ -12,6 +12,7 @@ class ProjectDossierController extends Controller
         $project->load([
             'system.identity.entity',
             'records.actor.identity.entity',
+            'documents.system.identity.entity',
         ]);
 
         return view('home.projects.dossier.show', compact('project'));

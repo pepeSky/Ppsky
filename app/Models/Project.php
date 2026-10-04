@@ -36,4 +36,10 @@ class Project extends Model
         return $this->hasMany(ProjectRecord::class)
             ->orderBy('occurred_at');
     }
+
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class)
+            ->withTimestamps();
+    }
 }

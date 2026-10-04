@@ -66,4 +66,44 @@
 
         </div>
     </div>
+<div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-6">
+    <div class="p-6">
+
+        <h2 class="text-lg font-semibold mb-6">
+            Documentación
+        </h2>
+
+        @forelse ($project->documents as $document)
+            <div class="border-b border-gray-200 py-4">
+
+                <div class="font-semibold">
+                    {{ $document->name }}
+                </div>
+
+                @if ($document->description)
+                    <div class="mt-1 text-gray-700">
+                        {{ $document->description }}
+                    </div>
+                @endif
+
+                <div class="mt-2 text-sm text-gray-500">
+                    Sistema:
+                    {{ $document->system?->identity?->entity?->name ?? 'Sin sistema' }}
+                </div>
+
+                @if ($document->location)
+                    <div class="mt-1 text-sm text-gray-500">
+                        Ubicación: {{ $document->location }}
+                    </div>
+                @endif
+
+            </div>
+        @empty
+            <p class="text-gray-500">
+                El proyecto todavía no posee documentos incorporados.
+            </p>
+        @endforelse
+
+    </div>
+</div>
 </x-app-layout>

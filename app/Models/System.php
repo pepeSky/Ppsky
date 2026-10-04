@@ -26,4 +26,9 @@ class System extends Model
     {
         return $this->hasMany(Project::class);
     }
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
 }

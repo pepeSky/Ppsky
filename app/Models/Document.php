@@ -13,4 +13,15 @@ class Document extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function system()
+    {
+        return $this->belongsTo(System::class);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)
+                    ->withTimestamps();
+    }
 }
