@@ -32,6 +32,16 @@ class Plan extends Model
         return $this->belongsTo(Project::class);
     }
 
+    public function goals()
+    {
+        return $this->hasMany(Goal::class);
+    }
+
+    public function objetives()
+    {
+        return $this->hasMany(Objetive::class);
+    }
+
     private function validateTemporalScope(): void
     {
         $start = $this->starts_at;

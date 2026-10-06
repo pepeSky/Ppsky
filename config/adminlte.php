@@ -439,8 +439,8 @@ return [
             'icon'    => 'far fa-fw fa-user-tie',
             'submenu' => [
                 [
-                    'text' => 'Planning',
-                    'url'  => '#',
+                    'text'  => 'Planning',
+                    'route' => 'admin.planning.index',
                 ],
                 [
                     'text' => 'Organization',

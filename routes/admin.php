@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ActorController;
 use App\Http\Controllers\Admin\InteractionController;
 use App\Http\Controllers\Admin\DocumentController;
 use App\Http\Controllers\Admin\SystemController;
+use App\Http\Controllers\Admin\Administration\PlanningController;
 use App\Http\Controllers\Admin\EntityController;
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\PostController;
@@ -60,6 +61,9 @@ use App\Http\Controllers\Admin\SyQuAc\UfController;
 
 
 Route::get('/', [AdminController::class, 'index'])->name('admin.home');
+
+Route::get('/planning', [PlanningController::class, 'index'])->name('admin.planning.index');
+Route::get('/planning/{plan}', [PlanningController::class, 'show'])->name('admin.planning.show');
 
 Route::get('/syquac/uf', [UfController::class, 'index'])->name('admin.syquac.uf.index');
 Route::get('/syquac/uf/{uf}', [UfController::class, 'show'])->name('admin.syquac.uf.show');
