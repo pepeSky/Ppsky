@@ -24,6 +24,14 @@
                 <h3 class="card-title">
                     Planificación
                 </h3>
+
+                <div class="card-tools">
+                    <a href="{{ route('admin.planning.edit', $plan) }}"
+                       class="btn btn-sm btn-primary">
+                        <i class="fas fa-edit mr-1"></i>
+                        Editar
+                    </a>
+                </div>
             </div>
 
             <div class="card-body">
@@ -37,12 +45,15 @@
                             @case('strategic')
                                 Estratégico
                                 @break
+
                             @case('tactical')
                                 Táctico
                                 @break
+
                             @case('operational')
                                 Operativo
                                 @break
+
                             @default
                                 {{ $plan->type }}
                         @endswitch
@@ -71,21 +82,81 @@
                 <h3 class="card-title">
                     Metas de Vida
                 </h3>
+
+                <div class="card-tools">
+                    <a href="{{ route('admin.planning.goals.create', $plan) }}"
+                       class="btn btn-sm btn-success">
+                        <i class="fas fa-plus mr-1"></i>
+                        Nueva Meta
+                    </a>
+                </div>
             </div>
 
             <div class="card-body">
-                @forelse ($plan->goals as $goal)
-                    <div class="{{ ! $loop->last ? 'border-bottom mb-3 pb-3' : '' }}">
-                        <h5>{{ $goal->name }}</h5>
-                        <p class="mb-0">
-                            {{ $goal->description }}
-                        </p>
+
+                @error('goal')
+                    <div class="alert alert-danger">
+                        {{ $message }}
                     </div>
+                @enderror
+
+                @forelse ($plan->goals as $goal)
+
+                    <div class="{{ ! $loop->last ? 'border-bottom mb-3 pb-3' : '' }}">
+
+                        <div class="d-flex justify-content-between align-items-start">
+
+                            <div class="pr-3">
+                                <h5>{{ $goal->name }}</h5>
+
+                                <p class="mb-0">
+                                    {{ $goal->description }}
+                                </p>
+                            </div>
+
+                            <div class="btn-group btn-group-sm">
+
+                                <a href="{{ route(
+                                    'admin.planning.goals.edit',
+                                    [$plan, $goal]
+                                ) }}"
+                                   class="btn btn-default"
+                                   title="Editar Meta">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <form method="POST"
+                                      action="{{ route(
+                                          'admin.planning.goals.destroy',
+                                          [$plan, $goal]
+                                      ) }}">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit"
+                                            class="btn btn-danger"
+                                            title="Eliminar Meta"
+                                            onclick="return confirm('¿Eliminar esta Meta de Vida?')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 @empty
+
                     <p class="text-muted mb-0">
                         No existen metas registradas.
                     </p>
+
                 @endforelse
+
             </div>
         </div>
 
@@ -118,7 +189,10 @@
                 @endif
 
                 @forelse ($rootObjetives as $objetive)
-                    <div class="{{ ! $loop->last ? 'border-top pt-3 mb-4' : 'border-top pt-3' }}">
+
+                    <div class="{{ ! $loop->last
+                        ? 'border-top pt-3 mb-4'
+                        : 'border-top pt-3' }}">
 
                         <div class="d-flex justify-content-between">
                             <h5>
@@ -149,10 +223,13 @@
                         @endif
 
                     </div>
+
                 @empty
+
                     <p class="text-muted mb-0">
                         No existen objetivos asociados al plan.
                     </p>
+
                 @endforelse
 
             </div>

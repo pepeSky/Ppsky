@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\InteractionController;
 use App\Http\Controllers\Admin\DocumentController;
 use App\Http\Controllers\Admin\SystemController;
 use App\Http\Controllers\Admin\Administration\PlanningController;
+use App\Http\Controllers\Admin\Administration\GoalController;
 use App\Http\Controllers\Admin\EntityController;
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\PostController;
@@ -62,8 +63,32 @@ use App\Http\Controllers\Admin\SyQuAc\UfController;
 
 Route::get('/', [AdminController::class, 'index'])->name('admin.home');
 
-Route::get('/planning', [PlanningController::class, 'index'])->name('admin.planning.index');
-Route::get('/planning/{plan}', [PlanningController::class, 'show'])->name('admin.planning.show');
+Route::get('/planning', [PlanningController::class, 'index'])
+    ->name('admin.planning.index');
+
+Route::get('/planning/{plan}', [PlanningController::class, 'show'])
+    ->name('admin.planning.show');
+
+Route::get('/planning/{plan}/edit', [PlanningController::class, 'edit'])
+    ->name('admin.planning.edit');
+
+Route::put('/planning/{plan}', [PlanningController::class, 'update'])
+    ->name('admin.planning.update');
+
+Route::get('/planning/{plan}/goals/create', [GoalController::class, 'create'])
+    ->name('admin.planning.goals.create');
+
+Route::post('/planning/{plan}/goals', [GoalController::class, 'store'])
+    ->name('admin.planning.goals.store');
+
+Route::get('/planning/{plan}/goals/{goal}/edit', [GoalController::class, 'edit'])
+    ->name('admin.planning.goals.edit');
+
+Route::put('/planning/{plan}/goals/{goal}', [GoalController::class, 'update'])
+    ->name('admin.planning.goals.update');
+
+Route::delete('/planning/{plan}/goals/{goal}', [GoalController::class, 'destroy'])
+    ->name('admin.planning.goals.destroy');
 
 Route::get('/syquac/uf', [UfController::class, 'index'])->name('admin.syquac.uf.index');
 Route::get('/syquac/uf/{uf}', [UfController::class, 'show'])->name('admin.syquac.uf.show');
@@ -144,7 +169,6 @@ Route::resource('subjects', SubjectController::class)->names('admin.subjects');
 | Management
 |--------------------------------------------------------------------------
 */
-
 
 
 /*

@@ -56,14 +56,7 @@ class PlanningController extends Controller
 
     public function show(Request $request, Plan $plan)
     {
-        $systemIds = $request->user()
-            ->systems()
-            ->pluck('systems.id');
-
-        abort_unless(
-            $systemIds->contains($plan->project->system_id),
-            404
-        );
+        $this->authorizePlan($request, $plan);
 
         $plan->load([
             'project.system.identity.entity',
@@ -76,5 +69,44 @@ class PlanningController extends Controller
             'admin.administration.planning.show',
             compact('plan')
         );
+    }
+
+    public function edit(Request $request, Plan $plan)
+    {
+        $this->authorizePlan($request, $plan);
+
+        return view(
+            'admin.administration.planning.edit',
+            compact('plan')
+        );
+    }
+
+    public function update(Request $request, Plan $plan)
+    {
+        $this->authorizePlan($request, $plan);
+
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'in:operational,tactical,strategic'],
+            'starts_at' => ['required', 'date'],
+            'ends_at' => ['required', 'date'],
+            'description' => ['nullable', 'string'],
+        ]);
+
+        $plan->update($data);
+
+        return redirect()
+            ->route('admin.planning.show', $plan)
+            ->with('info', 'Planificación actualizada correctamente.');
+    }
+
+    private function authorizePlan(Request $request, Plan $plan): void
+    {
+        $authorized = $request->user()
+            ->systems()
+            ->whereKey($plan->project->system_id)
+            ->exists();
+
+        abort_unless($authorized, 404);
     }
 }
