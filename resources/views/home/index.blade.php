@@ -25,15 +25,47 @@
                         Bienvenido, {{ auth()->user()->name }}
                     </h3>
 
-                    @if ($activeSystem)
-                        <p class="mt-2 text-gray-600">
-                            Sistema activo:
-                            <strong>
-                                {{ $activeSystem->identity->entity->name }}
-                            </strong>
-                        </p>
+                    @if ($systems->isNotEmpty())
+                        <form
+                            method="POST"
+                            action="{{ route('app.system.active') }}"
+                            class="mt-6"
+                        >
+                            @csrf
+
+                            <label
+                                for="system_id"
+                                class="block text-sm font-medium text-gray-700"
+                            >
+                                Sistema activo
+                            </label>
+
+                            <div class="mt-2 flex items-center gap-3">
+                                <select
+                                    id="system_id"
+                                    name="system_id"
+                                    class="block w-full max-w-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                >
+                                    @foreach ($systems as $system)
+                                        <option
+                                            value="{{ $system->id }}"
+                                            @selected($activeSystem && $activeSystem->id === $system->id)
+                                        >
+                                            {{ $system->identity->entity->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                <button
+                                    type="submit"
+                                    class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900"
+                                >
+                                    Seleccionar
+                                </button>
+                            </div>
+                        </form>
                     @else
-                        <p class="mt-2 text-gray-600">
+                        <p class="mt-4 text-gray-600">
                             No tienes un Sistema disponible.
                         </p>
                     @endif

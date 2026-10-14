@@ -35,6 +35,8 @@
                     @enderror
                 </div>
 
+                @include('admin.identities.formal-fields')
+
                 <button class="btn btn-primary">
                     Guardar
                 </button>

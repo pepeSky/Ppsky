@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        <input wire:model="search" class="form-control" placeholder="Ingrese el nombre del post" autocomplete="off">
+        <input type="search" id="buscar-registros" name="search" wire:model="search" class="form-control" placeholder="Buscar registros" aria-label="Buscar registros" autocomplete="off">
     </div>
 @if ($posts->count())
 <div class="card-body">

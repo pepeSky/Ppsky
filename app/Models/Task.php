@@ -22,4 +22,14 @@ class Task extends Model
     {
         return $this->belongsTo(Context::class);
     }
+
+    public function mewoProcess()
+    {
+        return $this->belongsTo(MewoProcess::class);
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
 }

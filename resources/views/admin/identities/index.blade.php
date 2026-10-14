@@ -2,10 +2,12 @@
 <x-admin-layout>
 
     <x-slot name="content_header">
+        @if($canManage)
         <a href="{{ route('admin.identities.create') }}"
            class="btn btn-primary float-right">
             Agregar Identidad
         </a>
+        @endif
 
         <h1>Identidades</h1>
 
@@ -31,7 +33,8 @@
                         <th>Entidad</th>
                         <th>Código</th>
                         <th>Naturaleza</th>
-                        <th>Identificación</th>
+                        <th>Datos de contacto</th>
+                        <th>Información personal</th>
                         <th>Actor</th>
                         <th></th>
                     </tr>
@@ -44,12 +47,14 @@
                             <td>{{ $identity->entity->name }}</td>
                             <td>{{ $identity->entity->code ?? '—' }}</td>
                             <td>{{ $identity->entity->nature->name }}</td>
-                            <td>{{ $identity->identification ?? '—' }}</td>
+                            @php($completion = app(\App\Services\MeWo\IdentityCompleteness::class)->percentages($identity))
+                            <td>@include('admin.identities.completion-bar',['percentage'=>$completion['contact'],'label'=>'Datos de contacto'])</td>
+                            <td>@include('admin.identities.completion-bar',['percentage'=>$completion['personal'],'label'=>'Información personal'])</td>
 
                             <td>
-                                @if ($identity->actor)
+                                @if ($identity->actors->isNotEmpty())
                                     <span class="badge badge-success">
-                                        Sí
+                                        {{ $identity->actors->count() }}
                                     </span>
                                 @else
                                     —
@@ -62,6 +67,7 @@
                                     Ver
                                 </a>
 
+                                @if($canManage)
                                 <a href="{{ route('admin.identities.edit', $identity) }}"
                                    class="btn btn-sm btn-warning">
                                     Editar
@@ -79,11 +85,12 @@
                                         Eliminar
                                     </button>
                                 </form>
+                                @endif
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center">
+                            <td colspan="8" class="text-center">
                                 No existen identidades registradas.
                             </td>
                         </tr>

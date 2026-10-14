@@ -15,4 +15,14 @@ class Proposition extends Model
     {
         return $this->belongsTo(Actor::class);
     }
+
+    public function systems()
+    {
+        return $this->belongsToMany(System::class);
+    }
+
+    public function binnacles()
+    {
+        return $this->belongsToMany(Binnacle::class);
+    }
 }

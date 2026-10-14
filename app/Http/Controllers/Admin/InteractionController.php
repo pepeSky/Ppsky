@@ -1,181 +1,74 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
-use App\Models\Actor;
 use App\Models\Cohesion;
 use App\Models\Interaction;
+use App\Services\MeWo\ActorAccess;
+use App\Services\MeWo\InteractionAccess;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-
 class InteractionController extends Controller
 {
-    public function index()
+    public function __construct(private ActorAccess $access, private InteractionAccess $interactions) {}
+    private function requirePermission(Request $request, string $permission): void
     {
-        $interactions = Interaction::with([
-                'actorA.identity.entity',
-                'actorB.identity.entity',
-                'cohesion',
-            ])
-            ->orderBy('id')
-            ->paginate(15);
-
-        return view(
-            'admin.interactions.index',
-            compact('interactions')
-        );
+        $this->access->require($request,$this->access->system($request),$permission);
     }
-
-    public function create()
+    private function check(Request $request, Interaction $interaction, string $permission): void
     {
-        $actors = Actor::with('identity.entity')
-            ->orderBy('id')
-            ->get();
-
-        $cohesions = Cohesion::orderBy('id')->get();
-
-        return view(
-            'admin.interactions.create',
-            compact('actors', 'cohesions')
-        );
+        $this->requirePermission($request,$permission);
+        abort_unless($this->interactions->query($request)->whereKey($interaction->id)->exists(),404);
     }
-
+    private function cohesions() { return Cohesion::whereIn('symbol',['0:0','0:1','1:1'])->get(); }
+    public function index(Request $request)
+    {
+        $this->requirePermission($request,'actors.view');
+        $interactions=$this->interactions->query($request)->with(['actorA.identity.entity','actorB.identity.entity','cohesion'])->orderBy('id')->paginate(15);
+        $canManage=$this->access->allows($request,$this->access->system($request),'actors.interactions');
+        return view('admin.interactions.index',compact('interactions','canManage'));
+    }
+    public function create(Request $request)
+    {
+        $this->requirePermission($request,'actors.interactions');
+        $actors=$this->interactions->actors($request)->with('identity.entity')->get(); $cohesions=$this->cohesions();
+        return view('admin.interactions.create',compact('actors','cohesions'));
+    }
+    private function validateCohesion(Request $request): array
+    {
+        return $request->validate(['cohesion_id'=>['required',Rule::exists('cohesions','id')->whereIn('symbol',['0:0','0:1','1:1'])]]);
+    }
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'actor_a_id' => [
-                'required',
-                Rule::exists('actors', 'id'),
-                'different:actor_b_id',
-            ],
-
-            'actor_b_id' => [
-                'required',
-                Rule::exists('actors', 'id'),
-                'different:actor_a_id',
-            ],
-
-            'cohesion_id' => [
-                'required',
-                Rule::exists('cohesions', 'id'),
-            ],
-        ]);
-
-        $actorA = min(
-            (int) $data['actor_a_id'],
-            (int) $data['actor_b_id']
-        );
-
-        $actorB = max(
-            (int) $data['actor_a_id'],
-            (int) $data['actor_b_id']
-        );
-
-        $exists = Interaction::where('actor_a_id', $actorA)
-            ->where('actor_b_id', $actorB)
-            ->where('cohesion_id', $data['cohesion_id'])
-            ->exists();
-
-        if ($exists) {
-            return back()
-                ->withInput()
-                ->withErrors([
-                    'cohesion_id' =>
-                        'Esta interacción ya existe para los actores y cohesión seleccionados.',
-                ]);
-        }
-
-        Interaction::create([
-            'actor_a_id' => $actorA,
-            'actor_b_id' => $actorB,
-            'cohesion_id' => $data['cohesion_id'],
-        ]);
-
-        return redirect()
-            ->route('admin.interactions.index')
-            ->with('info', 'Interacción registrada correctamente.');
+        $this->requirePermission($request,'actors.interactions'); $data=$this->validateCohesion($request);
+        $actors=$request->validate(['actor_a_id'=>['required','integer','different:actor_b_id'],'actor_b_id'=>['required','integer']]);
+        $a=$this->interactions->actors($request)->whereKey($actors['actor_a_id'])->firstOrFail();
+        $b=$this->interactions->actors($request)->whereKey($actors['actor_b_id'])->firstOrFail();
+        Interaction::firstOrCreate(['actor_a_id'=>min($a->id,$b->id),'actor_b_id'=>max($a->id,$b->id),'cohesion_id'=>$data['cohesion_id']]);
+        return redirect()->route('admin.interactions.index')->with('info','Interacción registrada.');
     }
-
-    public function show(Interaction $interaction)
+    public function show(Request $request, Interaction $interaction)
     {
-        $interaction->load([
-            'actorA.identity.entity',
-            'actorB.identity.entity',
-            'cohesion',
-        ]);
-
-        return view(
-            'admin.interactions.show',
-            compact('interaction')
-        );
+        $this->check($request,$interaction,'actors.view'); $interaction->load(['actorA.identity.entity','actorB.identity.entity','cohesion']);
+        $canManage=$this->access->allows($request,$this->access->system($request),'actors.interactions');
+        return view('admin.interactions.show',compact('interaction','canManage'));
     }
-
-    public function edit(Interaction $interaction)
+    public function edit(Request $request, Interaction $interaction)
     {
-        $interaction->load([
-            'actorA.identity.entity',
-            'actorB.identity.entity',
-        ]);
-
-        $cohesions = Cohesion::orderBy('id')->get();
-
-        return view(
-            'admin.interactions.edit',
-            compact('interaction', 'cohesions')
-        );
+        $this->check($request,$interaction,'actors.interactions'); $interaction->load(['actorA.identity.entity','actorB.identity.entity']); $cohesions=$this->cohesions();
+        return view('admin.interactions.edit',compact('interaction','cohesions'));
     }
-
-    public function update(
-        Request $request,
-        Interaction $interaction
-    ) {
-        $data = $request->validate([
-            'cohesion_id' => [
-                'required',
-                Rule::exists('cohesions', 'id'),
-            ],
-        ]);
-
-        $duplicate = Interaction::where(
-                'actor_a_id',
-                $interaction->actor_a_id
-            )
-            ->where(
-                'actor_b_id',
-                $interaction->actor_b_id
-            )
-            ->where(
-                'cohesion_id',
-                $data['cohesion_id']
-            )
-            ->where('id', '!=', $interaction->id)
-            ->exists();
-
-        if ($duplicate) {
-            return back()
-                ->withInput()
-                ->withErrors([
-                    'cohesion_id' =>
-                        'Esta interacción ya existe para los actores y cohesión seleccionados.',
-                ]);
-        }
-
-        $interaction->update([
-            'cohesion_id' => $data['cohesion_id'],
-        ]);
-
-        return redirect()
-            ->route('admin.interactions.index')
-            ->with('info', 'Interacción actualizada correctamente.');
-    }
-
-    public function destroy(Interaction $interaction)
+    public function update(Request $request, Interaction $interaction)
     {
-        $interaction->delete();
-
-        return redirect()
-            ->route('admin.interactions.index')
-            ->with('info', 'Interacción eliminada correctamente.');
+        $this->check($request,$interaction,'actors.interactions'); $data=$this->validateCohesion($request);
+        if(Interaction::where('actor_a_id',$interaction->actor_a_id)->where('actor_b_id',$interaction->actor_b_id)->where('cohesion_id',$data['cohesion_id'])->where('id','!=',$interaction->id)->exists()) { return back()->withErrors(['cohesion_id'=>'Esta interacción ya existe.']); }
+        if($interaction->cohesion_id!=$data['cohesion_id'] && \App\Models\InteractionPeriod::where('interaction_id',$interaction->id)->exists()) { return back()->withErrors(['cohesion_id'=>'Conserve la interacción con tiempo registrado; agregue otra cohesión.']); }
+        $interaction->update($data);
+        return redirect()->route('admin.interactions.index');
+    }
+    public function destroy(Request $request, Interaction $interaction)
+    {
+        $this->check($request,$interaction,'actors.interactions');
+        if(\App\Models\InteractionPeriod::where('interaction_id',$interaction->id)->exists()) { return back()->withErrors(['interaction'=>'Esta interacción tiene períodos registrados.']); }
+        $interaction->delete(); return redirect()->route('admin.interactions.index');
     }
 }

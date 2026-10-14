@@ -1,0 +1,4 @@
+<x-admin-layout><x-slot name="content_header"><h1>Agregar modelo</h1></x-slot>@include('admin.mewo._messages')
+<div class="card"><div class="card-body"><form method="POST" action="{{ route('admin.binnacle-models.store') }}">@csrf @if($binnacle)<input type="hidden" name="binnacle_id" value="{{ $binnacle->id }}">@endif
+<div class="form-group"><label for="name">Modelo</label><input id="name" name="name" class="form-control" required maxlength="255" value="{{ old('name') }}"></div>
+<div class="form-group"><label for="description">Descripción</label><textarea id="description" name="description" class="form-control" rows="4">{{ old('description') }}</textarea></div><button class="btn btn-primary">Guardar modelo</button><a class="btn btn-secondary" href="{{ $binnacle ? route('admin.binnacles.show',$binnacle) : route('admin.posts.index') }}">Cancelar</a></form></div></div></x-admin-layout>

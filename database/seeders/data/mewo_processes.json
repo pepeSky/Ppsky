@@ -1,0 +1,417 @@
+{
+  "REF": [
+    [
+      "OBS",
+      "Observación",
+      [
+        "observar"
+      ]
+    ],
+    [
+      "RFL",
+      "Reflexión",
+      [
+        "reflexionar"
+      ]
+    ],
+    [
+      "ANL",
+      "Análisis",
+      [
+        "analizar"
+      ]
+    ],
+    [
+      "PRY",
+      "Proyección",
+      [
+        "proyectar"
+      ]
+    ]
+  ],
+  "ADM": [
+    [
+      "PLN",
+      "Planificación",
+      [
+        "planificar"
+      ]
+    ],
+    [
+      "ORG",
+      "Organización",
+      [
+        "organizar"
+      ]
+    ],
+    [
+      "DIR",
+      "Dirección",
+      [
+        "dirigir",
+        "coordinar"
+      ]
+    ],
+    [
+      "CTL",
+      "Control",
+      [
+        "controlar"
+      ]
+    ]
+  ],
+  "SAL": [
+    [
+      "DET",
+      "Detección",
+      [
+        "detectar"
+      ]
+    ],
+    [
+      "EVA",
+      "Evaluación",
+      [
+        "evaluar"
+      ]
+    ],
+    [
+      "INT",
+      "Intervención",
+      [
+        "atender",
+        "tratar"
+      ]
+    ],
+    [
+      "SEG",
+      "Seguimiento",
+      [
+        "monitorear"
+      ]
+    ]
+  ],
+  "COM": [
+    [
+      "REQ",
+      "Requerimiento",
+      [
+        "requerir"
+      ]
+    ],
+    [
+      "VAL",
+      "Valoración",
+      [
+        "valorar",
+        "cotizar"
+      ]
+    ],
+    [
+      "NEG",
+      "Negociación",
+      [
+        "negociar"
+      ]
+    ],
+    [
+      "FOR",
+      "Formalización",
+      [
+        "formalizar",
+        "contratar"
+      ]
+    ],
+    [
+      "INC",
+      "Intercambio",
+      [
+        "intercambiar",
+        "vender"
+      ]
+    ]
+  ],
+  "FIN": [
+    [
+      "REG",
+      "Observación y registro",
+      [
+        "observar",
+        "registrar"
+      ]
+    ],
+    [
+      "EVA",
+      "Evaluación",
+      [
+        "evaluar"
+      ]
+    ],
+    [
+      "COH",
+      "Determinación de coherencia",
+      [
+        "determinar",
+        "conciliar"
+      ]
+    ],
+    [
+      "PRY",
+      "Proyección",
+      [
+        "proyectar",
+        "presupuestar"
+      ]
+    ]
+  ],
+  "APR": [
+    [
+      "ING",
+      "Ingreso y registro",
+      [
+        "recibir",
+        "registrar"
+      ]
+    ],
+    [
+      "CUS",
+      "Custodia operativa",
+      [
+        "custodiar",
+        "almacenar"
+      ]
+    ],
+    [
+      "VAL",
+      "Valoración estratégica",
+      [
+        "valorar"
+      ]
+    ],
+    [
+      "SAL",
+      "Salida controlada",
+      [
+        "suministrar",
+        "entregar"
+      ]
+    ]
+  ],
+  "MAN": [
+    [
+      "IDR",
+      "Identificación de recursos",
+      [
+        "identificar",
+        "inspeccionar"
+      ]
+    ],
+    [
+      "PRE",
+      "Planificación preventiva",
+      [
+        "planificar",
+        "prevenir"
+      ]
+    ],
+    [
+      "COR",
+      "Intervención correctiva",
+      [
+        "reparar",
+        "sustituir",
+        "mantener"
+      ]
+    ],
+    [
+      "MON",
+      "Monitoreo predictivo",
+      [
+        "monitorear",
+        "diagnosticar"
+      ]
+    ],
+    [
+      "ACT",
+      "Actualización operativa",
+      [
+        "actualizar",
+        "registrar"
+      ]
+    ]
+  ],
+  "CAP": [
+    [
+      "IDN",
+      "Identificación de necesidades",
+      [
+        "identificar",
+        "diagnosticar"
+      ]
+    ],
+    [
+      "DIS",
+      "Diseño formativo",
+      [
+        "diseñar"
+      ]
+    ],
+    [
+      "EJE",
+      "Ejecución instruccional",
+      [
+        "enseñar",
+        "instruir",
+        "practicar",
+        "aprender"
+      ]
+    ],
+    [
+      "EVA",
+      "Evaluación operativa",
+      [
+        "evaluar",
+        "verificar"
+      ]
+    ],
+    [
+      "INT",
+      "Integración al sistema",
+      [
+        "integrar",
+        "registrar"
+      ]
+    ]
+  ],
+  "DES": [
+    [
+      "IDP",
+      "Identificación del problema",
+      [
+        "identificar"
+      ]
+    ],
+    [
+      "DIA",
+      "Diagnóstico funcional",
+      [
+        "diagnosticar",
+        "analizar"
+      ]
+    ],
+    [
+      "FOR",
+      "Formulación de solución",
+      [
+        "formular",
+        "modelar",
+        "diseñar"
+      ]
+    ],
+    [
+      "IMP",
+      "Implementación controlada",
+      [
+        "implementar",
+        "construir"
+      ]
+    ],
+    [
+      "EVA",
+      "Evaluación y validación",
+      [
+        "evaluar",
+        "probar",
+        "validar"
+      ]
+    ]
+  ],
+  "CMN": [
+    [
+      "DAT",
+      "Enfoque en datos e información",
+      [
+        "identificar",
+        "describir"
+      ]
+    ],
+    [
+      "VAL",
+      "Validación estratégica",
+      [
+        "validar"
+      ]
+    ],
+    [
+      "CAN",
+      "Canalización comunicacional",
+      [
+        "canalizar",
+        "codificar"
+      ]
+    ],
+    [
+      "PUB",
+      "Publicación y difusión",
+      [
+        "publicar",
+        "transmitir",
+        "emitir",
+        "recibir",
+        "redactar",
+        "escribir"
+      ]
+    ],
+    [
+      "SEG",
+      "Seguimiento e impacto",
+      [
+        "monitorear",
+        "interpretar",
+        "retroalimentar"
+      ]
+    ]
+  ],
+  "JUR": [
+    [
+      "IDN",
+      "Identificación normativa",
+      [
+        "identificar",
+        "interpretar"
+      ]
+    ],
+    [
+      "FOR",
+      "Formulación de norma",
+      [
+        "formular",
+        "acordar"
+      ]
+    ],
+    [
+      "VAL",
+      "Validación estratégica",
+      [
+        "validar",
+        "autorizar"
+      ]
+    ],
+    [
+      "APL",
+      "Aplicación normativa",
+      [
+        "aplicar",
+        "regular"
+      ]
+    ],
+    [
+      "RES",
+      "Resolución de conflictos",
+      [
+        "resolver",
+        "reclamar"
+      ]
+    ]
+  ]
+}

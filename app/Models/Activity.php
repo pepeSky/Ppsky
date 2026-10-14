@@ -25,4 +25,21 @@ class Activity extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function contexts()
+    {
+        return $this->belongsToMany(Context::class);
+    }
+
+    public function mewoProcesses()
+    {
+        return $this->belongsToMany(MewoProcess::class, 'activity_mewo_process');
+    }
+
+    // Aggregate tasks once, never by joins to contexts or processes.
+    public function quantities()
+    {
+        return $this->tasks()->whereNotNull('unit_id')->selectRaw('unit_id, SUM(quantity) as total')
+            ->groupBy('unit_id')->with('unit')->get();
+    }
 }

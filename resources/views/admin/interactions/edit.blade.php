@@ -12,13 +12,13 @@
 
                 <p class="form-control-static">
                     <strong>
-                        {{ $interaction->actorA->identity->entity->name }}
+                        {{ $interaction->actorA->display_name }}
                     </strong>
 
                     &nbsp; ↔ &nbsp;
 
                     <strong>
-                        {{ $interaction->actorB->identity->entity->name }}
+                        {{ $interaction->actorB->display_name }}
                     </strong>
                 </p>
             </div>

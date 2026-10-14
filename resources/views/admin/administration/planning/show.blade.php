@@ -20,6 +20,7 @@
     <div class="container-fluid">
 
         <div class="card card-outline card-primary">
+
             <div class="card-header">
                 <h3 class="card-title">
                     Planificación
@@ -36,48 +37,39 @@
 
             <div class="card-body">
                 <dl class="row mb-0">
+
                     <dt class="col-sm-2">Plan</dt>
-                    <dd class="col-sm-10">{{ $plan->name }}</dd>
+                    <dd class="col-sm-10">
+                        {{ $plan->name }}
+                    </dd>
 
                     <dt class="col-sm-2">Tipo</dt>
                     <dd class="col-sm-10">
-                        @switch($plan->type)
-                            @case('strategic')
-                                Estratégico
-                                @break
-
-                            @case('tactical')
-                                Táctico
-                                @break
-
-                            @case('operational')
-                                Operativo
-                                @break
-
-                            @default
-                                {{ $plan->type }}
-                        @endswitch
+                        {{ ucfirst($plan->type) }}
                     </dd>
 
                     <dt class="col-sm-2">Inicio</dt>
                     <dd class="col-sm-10">
-                        {{ $plan->starts_at?->format('d-m-Y') }}
+                        {{ $plan->starts_at?->format('d-m-Y') ?? 'No definido' }}
                     </dd>
 
                     <dt class="col-sm-2">Término</dt>
                     <dd class="col-sm-10">
-                        {{ $plan->ends_at?->format('d-m-Y') }}
+                        {{ $plan->ends_at?->format('d-m-Y') ?? 'No definido' }}
                     </dd>
 
                     <dt class="col-sm-2">Descripción</dt>
                     <dd class="col-sm-10">
-                        {{ $plan->description }}
+                        {{ $plan->description ?: 'Sin descripción' }}
                     </dd>
+
                 </dl>
             </div>
+
         </div>
 
         <div class="card card-outline card-success">
+
             <div class="card-header">
                 <h3 class="card-title">
                     Metas de Vida
@@ -85,7 +77,7 @@
 
                 <div class="card-tools">
                     <a href="{{ route('admin.planning.goals.create', $plan) }}"
-                       class="btn btn-sm btn-success">
+                       class="btn btn-success btn-sm">
                         <i class="fas fa-plus mr-1"></i>
                         Nueva Meta
                     </a>
@@ -158,16 +150,32 @@
                 @endforelse
 
             </div>
+
         </div>
 
         <div class="card card-outline card-info">
+
             <div class="card-header">
                 <h3 class="card-title">
                     Objetivos
                 </h3>
+
+                <div class="card-tools">
+                    <a href="{{ route('admin.planning.objetives.create', $plan) }}"
+                       class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus mr-1"></i>
+                        Nuevo Objetivo
+                    </a>
+                </div>
             </div>
 
             <div class="card-body">
+
+                @error('objetive')
+                    <div class="alert alert-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
 
                 @php
                     $general = $plan->objetives
@@ -179,47 +187,177 @@
                 @endphp
 
                 @if ($general)
+
                     <div class="mb-4">
-                        <h5>Objetivo General</h5>
+
+                        <div class="d-flex justify-content-between align-items-start">
+
+                            <h5>
+                                Objetivo General
+                            </h5>
+
+                            <a href="{{ route(
+                                'admin.planning.objetives.edit',
+                                [$plan, $general]
+                            ) }}"
+                               class="btn btn-default btn-sm"
+                               title="Editar Objetivo General">
+                                <i class="fas fa-edit"></i>
+                            </a>
+
+                        </div>
 
                         <p class="mb-0">
                             {{ $general->description }}
                         </p>
+
                     </div>
+
                 @endif
 
                 @forelse ($rootObjetives as $objetive)
 
-                    <div class="{{ ! $loop->last
-                        ? 'border-top pt-3 mb-4'
-                        : 'border-top pt-3' }}">
+                    <div class="border-top pt-3 mb-4">
 
-                        <div class="d-flex justify-content-between">
-                            <h5>
-                                Objetivo N.º {{ $loop->iteration }}
-                            </h5>
+                        <div class="d-flex justify-content-between align-items-start">
 
-                            @if ($objetive->goal)
-                                <span class="badge badge-secondary">
-                                    {{ $objetive->goal->name }}
-                                </span>
-                            @endif
+                            <div class="pr-3">
+
+                                <h5>
+                                    Objetivo N.º {{ $loop->iteration }}
+                                </h5>
+
+                                @if ($objetive->goal)
+                                    <span class="badge badge-secondary">
+                                        {{ $objetive->goal->name }}
+                                    </span>
+                                @endif
+
+                            </div>
+
+                            <div class="btn-group btn-group-sm">
+
+                                <a href="{{ route(
+                                    'admin.planning.objetives.edit',
+                                    [$plan, $objetive]
+                                ) }}"
+                                   class="btn btn-default"
+                                   title="Editar Objetivo">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <a href="{{ route(
+                                    'admin.planning.objetives.create',
+                                    [
+                                        'plan' => $plan,
+                                        'parent_id' => $objetive->id
+                                    ]
+                                ) }}"
+                                   class="btn btn-primary"
+                                   title="Agregar Objetivo Específico">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+
+                            </div>
+
                         </div>
 
-                        <p>
+                        <p class="mt-2">
                             {{ $objetive->description }}
                         </p>
 
                         @if ($objetive->children->isNotEmpty())
-                            <h6>Objetivos específicos</h6>
+
+                            <h6>
+                                Objetivos específicos
+                            </h6>
 
                             <ol class="mb-0">
-                                @foreach ($objetive->children as $child)
-                                    <li class="mb-2">
-                                        {{ $child->description }}
+
+                                @foreach ($objetive->children as $specific)
+
+                                    <li class="mb-3">
+
+                                        <div class="d-flex justify-content-between align-items-start">
+
+                                            <span class="pr-3">
+                                                {{ $specific->description }}
+                                            </span>
+
+                                            <div class="btn-group btn-group-sm">
+
+                                                <a href="{{ route(
+                                                    'admin.planning.objetives.edit',
+                                                    [$plan, $specific]
+                                                ) }}"
+                                                   class="btn btn-default"
+                                                   title="Editar Objetivo Específico">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+
+                                                <a href="{{ route(
+                                                    'admin.planning.objetives.create',
+                                                    [
+                                                        'plan' => $plan,
+                                                        'parent_id' => $specific->id
+                                                    ]
+                                                ) }}"
+                                                   class="btn btn-primary"
+                                                   title="Agregar Objetivo Cuántico">
+                                                    <i class="fas fa-plus"></i>
+                                                </a>
+
+                                            </div>
+
+                                        </div>
+
+                                        @if ($specific->children->isNotEmpty())
+
+                                            <div class="mt-3 ml-2">
+
+                                                <h6 class="text-muted">
+                                                    Objetivos cuánticos
+                                                </h6>
+
+                                                <ol class="mb-0">
+
+                                                    @foreach ($specific->children as $quantum)
+
+                                                        <li class="mb-2">
+
+                                                            <div class="d-flex justify-content-between align-items-start">
+
+                                                                <span class="pr-3">
+                                                                    {{ $quantum->description }}
+                                                                </span>
+
+                                                                <a href="{{ route(
+                                                                    'admin.planning.objetives.edit',
+                                                                    [$plan, $quantum]
+                                                                ) }}"
+                                                                   class="btn btn-default btn-xs"
+                                                                   title="Editar Objetivo Cuántico">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </a>
+
+                                                            </div>
+
+                                                        </li>
+
+                                                    @endforeach
+
+                                                </ol>
+
+                                            </div>
+
+                                        @endif
+
                                     </li>
+
                                 @endforeach
+
                             </ol>
+
                         @endif
 
                     </div>
@@ -233,6 +371,7 @@
                 @endforelse
 
             </div>
+
         </div>
 
     </div>

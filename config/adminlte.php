@@ -316,16 +316,15 @@ return [
             'icon'    => 'fas fa-fw fa-cubes',
             'submenu' => [
                 [
+                    'text' => 'Integración',
+                    'route' => 'admin.mewo.contexts.index',
+                    'icon' => 'fas fa-fw fa-sitemap',
+                ],
+                [
                     'text' => 'Bitácora',
                     'route'    => 'admin.posts.index',
                     'icon' => 'fas fa-fw fa-pen-fancy',
-                    'active' => ['admin/posts*'],
-                ],
-                [
-                    'text' => 'Entidades',
-                    'route'    => 'admin.entities.index',
-                    'icon' => 'fas fa-fw fa-users-cog',
-                    'active' => ['admin/entities*'],
+                    'active' => ['admin/posts*', 'admin/binnacles*', 'admin/binnacle-models*'],
                 ],
                 [
                     'text' => 'Actividades',
@@ -333,13 +332,6 @@ return [
                     'icon' => 'fa-fw fas fa-wave-square',
                     'active' => ['admin/activities*'],
                 ],
-                [
-                    'text' => 'Modelos',
-                    'route'    => 'admin.ideas.index',
-                    'icon' => 'fa-fw far fa-cash-register',
-                    'active' => ['admin/ideas*'],
-                ],
-
             ],
         ],
 

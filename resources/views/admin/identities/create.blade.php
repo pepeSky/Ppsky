@@ -53,6 +53,8 @@
                     @enderror
                 </div>
 
+                @include('admin.identities.formal-fields')
+
                 <button type="submit" class="btn btn-primary">
                     Registrar
                 </button>

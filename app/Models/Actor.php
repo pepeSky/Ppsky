@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Actor extends Model
 {
     protected $guarded = ['id'];
+    protected $casts = ['archived_at'=>'datetime'];
+    public function classifications() { return $this->hasMany(ActorClassification::class)->orderBy('id'); }
+    public function getDisplayNameAttribute(): string { return filled($this->name) ? trim($this->name) : $this->identity->display_name; }
+    public function unit() { return $this->belongsTo(Unit::class); }
+    public function system() { return $this->belongsTo(System::class); }
+    public function originActor() { return $this->belongsTo(self::class, 'origin_actor_id'); }
+    public function cohesions() { return $this->belongsToMany(Cohesion::class, 'actor_cohesion')->withTimestamps(); }
+    public function children() { return $this->belongsToMany(self::class, 'actor_links', 'parent_id', 'child_id')->withTimestamps(); }
+    public function parents() { return $this->belongsToMany(self::class, 'actor_links', 'child_id', 'parent_id')->withTimestamps(); }
+    public function getTypeNameAttribute() { return config('actors.types.'.$this->unit_symbol.'.'.$this->type_position, 'Sin clasificar'); }
 
 
     public function identity()

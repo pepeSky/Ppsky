@@ -20,8 +20,9 @@ class EntityController extends Controller
         return view('admin.entities.index', compact('entities'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $this->requireManagement($request);
         $natures = Nature::orderBy('name')->get();
         $types = Type::orderBy('name')->get();
 
@@ -30,6 +31,7 @@ class EntityController extends Controller
 
     public function store(Request $request)
     {
+        $this->requireManagement($request);
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'code' => ['nullable', 'string', 'max:255'],
@@ -58,8 +60,9 @@ class EntityController extends Controller
         return view('admin.entities.show', compact('entity'));
     }
 
-    public function edit(Entity $entity)
+    public function edit(Request $request, Entity $entity)
     {
+        $this->requireManagement($request,$entity);
         $entity->load('types');
 
         $natures = Nature::orderBy('name')->get();
@@ -73,6 +76,7 @@ class EntityController extends Controller
 
     public function update(Request $request, Entity $entity)
     {
+        $this->requireManagement($request,$entity);
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'code' => ['nullable', 'string', 'max:255'],
@@ -94,12 +98,20 @@ class EntityController extends Controller
             ->with('info', 'Entidad actualizada correctamente.');
     }
 
-    public function destroy(Entity $entity)
+    public function destroy(Request $request, Entity $entity)
     {
+        $this->requireManagement($request,$entity);
+        if($entity->identities()->exists()) { return back()->withErrors(['entity'=>'Esta entidad tiene identidades asociadas y debe conservarse.']); }
         $entity->delete();
 
         return redirect()
             ->route('admin.entities.index')
             ->with('info', 'Entidad eliminada correctamente.');
+    }
+    private function requireManagement(Request $request, ?Entity $entity=null): void
+    {
+        $access=app(\App\Services\MeWo\ActorAccess::class);
+        $access->require($request,$access->system($request),'identities.manage');
+        if($entity) { abort_if($entity->identities()->where('user_id','!=',$request->user()->id)->exists(),403); }
     }
 }

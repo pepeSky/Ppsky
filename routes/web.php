@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Home\StudyController;
 use App\Http\Controllers\Home\BusinessController;
+use App\Http\Controllers\Home\PostController;
 use App\Http\Controllers\Welcome\DevelopmentController;
 use App\Http\Controllers\Welcome\ModuleController;
 use App\Http\Controllers\welcome\SubjectController;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', WelcomeController::class)->name('welcome');
 
+Route::get('/home', [PostController::class, 'index'])->name('legacy.home');
 Route::get('aplications', [ModuleController::class, 'index'])->name('Aplications');
 
 Route::get('modules/{module}',function(){
@@ -48,8 +50,7 @@ Route::middleware([
 
     Route::get('/business', [BusinessController::class, 'index'])->name('business.index');
 
-    Route::get('/modules', function(){
-        return 'vista de modulos';
-    })->name('modules.index');
+    Route::view('/modules', 'home.modules.index')
+        ->name('modules.index');
 
 });

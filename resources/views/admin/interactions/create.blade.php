@@ -30,7 +30,7 @@
                             <option value="{{ $actor->id }}"
                                 @selected(old('actor_a_id') == $actor->id)>
 
-                                {{ $actor->identity->entity->name }}
+                                {{ $actor->display_name }}
                                 — {{ $actor->identity->identification }}
 
                             </option>
@@ -62,7 +62,7 @@
                             <option value="{{ $actor->id }}"
                                 @selected(old('actor_b_id') == $actor->id)>
 
-                                {{ $actor->identity->entity->name }}
+                                {{ $actor->display_name }}
                                 — {{ $actor->identity->identification }}
 
                             </option>

@@ -15,4 +15,19 @@ class MewoProcess extends Model
     {
         return $this->belongsTo(Context::class);
     }
+
+    public function verbs()
+    {
+        return $this->belongsToMany(OperationalVerb::class, 'mewo_process_operational_verb');
+    }
+
+    public function activities()
+    {
+        return $this->belongsToMany(Activity::class, 'activity_mewo_process');
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

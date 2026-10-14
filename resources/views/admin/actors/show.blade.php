@@ -1,69 +1,19 @@
-@extends('adminlte::page')
-
-@section('title', 'Actor')
-
-@section('content_header')
-    <h1>Actor</h1>
-@stop
-
-@section('content')
-
-    <div class="card">
-
-        <div class="card-body">
-
-            <dl class="row">
-
-                <dt class="col-sm-3">
-                    ID
-                </dt>
-
-                <dd class="col-sm-9">
-                    {{ $actor->id }}
-                </dd>
-
-                <dt class="col-sm-3">
-                    Entidad
-                </dt>
-
-                <dd class="col-sm-9">
-                    {{ $actor->identity->entity->name }}
-                </dd>
-
-                <dt class="col-sm-3">
-                    Código
-                </dt>
-
-                <dd class="col-sm-9">
-                    {{ $actor->identity->entity->code }}
-                </dd>
-
-                <dt class="col-sm-3">
-                    Identificación
-                </dt>
-
-                <dd class="col-sm-9">
-                    {{ $actor->identity->identification ?? '—' }}
-                </dd>
-
-            </dl>
-
-        </div>
-
-        <div class="card-footer">
-
-            <a href="{{ route('admin.actors.edit', $actor) }}"
-               class="btn btn-primary">
-                Editar
-            </a>
-
-            <a href="{{ route('admin.actors.index') }}"
-               class="btn btn-secondary">
-                Volver
-            </a>
-
-        </div>
-
-    </div>
-
-@stop
+<x-admin-layout><x-slot name="content_header"><h1>Ficha del actor: {{ $actor->display_name }}</h1><p class="mb-0">Sistema: {{ $system->identity->display_name }}</p></x-slot>
+@include('admin.actors.messages')
+<div class="card"><div class="card-body"><h2 class="h5">Cohesiones con el sistema</h2><ul>@forelse($actor->cohesions as $cohesion)<li>{{ $cohesion->name }} ({{ $cohesion->symbol }})</li>@empty<li>Sin definir.</li>@endforelse</ul>
+@if($privateIdentity)<h2 class="h5 mt-4">Identidad del actor</h2><p>{{ $actor->identity->display_name }}</p>@include('admin.identities.formal-details',['identity'=>$actor->identity])
+@if((int)$actor->identity->user_id===(int)auth()->id() && $access->allows(request(),$system,'identities.manage'))<a class="btn btn-outline-secondary btn-sm" href="{{ route('admin.identities.edit',$actor->identity) }}">Editar datos de identidad</a>@endif
+@endif
+<h2 class="h5 mt-4">Clasificaciones SyQuAc</h2><div class="table-responsive"><table class="table table-striped"><thead><tr><th>Unidad</th><th>Tipificación</th><th>Código</th><th>Cohesión asociada</th></tr></thead><tbody>@forelse($actor->classifications as $classification)<tr><td>{{ $classification->unit_symbol }}</td><td>{{ $classification->type_name }}</td><td>{{ $classification->code }}</td><td>{{ $classification->cohesion?->name ?? 'Sin asociación específica' }}</td></tr>@empty<tr><td colspan="4">Sin clasificaciones.</td></tr>@endforelse</tbody></table></div>
+@if($actor->system_id && !$actor->archived_at && $access->allows(request(),$system,'actors.classify'))<details class="mb-3"><summary>Agregar clasificación SyQuAc</summary><form method="POST" class="mt-3" action="{{ route('admin.actors.classifications.store',$actor) }}">@csrf<div class="row"><div class="form-group col-md-3"><label for="classification_unit">Unidad</label><select id="classification_unit" class="form-control" name="unit_symbol" required><option value="">Seleccione</option>@foreach(config('actors.types') as $symbol=>$types)<option value="{{ $symbol }}" @selected(old('unit_symbol')===$symbol)>{{ $symbol }}</option>@endforeach</select></div><div class="form-group col-md-5"><label for="classification_type">Tipificación</label><select id="classification_type" class="form-control" name="type_position" required></select></div><div class="form-group col-md-4"><label for="classification_cohesion">Cohesión asociada</label><select id="classification_cohesion" class="form-control" name="cohesion_id"><option value="">Sin asociación específica</option>@foreach($actor->cohesions as $cohesion)<option value="{{ $cohesion->id }}" @selected(old('cohesion_id')==$cohesion->id)>{{ $cohesion->name }}</option>@endforeach</select></div></div><button class="btn btn-outline-primary">Guardar clasificación</button></form></details>@endif
+<details class="mb-3"><summary>Vínculos SyQuAc</summary><div class="mt-3">
+@foreach($actor->classifications as $classification)<p class="mb-1"><strong>{{ $classification->code }} — {{ $classification->type_name }}</strong></p><ul>@forelse($classification->children as $child)<li>{{ $child->code }} — {{ $child->actor->display_name }}</li>@empty<li>Sin unidades asociadas.</li>@endforelse @foreach($classification->parents as $parent)<li>Vinculada a {{ $parent->code }} — {{ $parent->actor->display_name }}</li>@endforeach</ul>
+@if(!$actor->archived_at && $access->allows(request(),$system,'actors.link') && config('actors.links.'.$classification->unit_symbol,[]))<form method="POST" class="mb-3" action="{{ route('admin.actors.classifications.links',$classification) }}">@csrf @method('PUT')<label for="classification_children_{{ $classification->id }}">Unidades asociadas</label><select id="classification_children_{{ $classification->id }}" name="child_ids[]" multiple class="form-control">@foreach($classCandidates->whereIn('unit_symbol',config('actors.links.'.$classification->unit_symbol,[])) as $candidate)<option value="{{ $candidate->id }}" @selected($classification->children->contains('id',$candidate->id))>{{ $candidate->code }} — {{ $candidate->actor->display_name }}</option>@endforeach</select><button class="btn btn-outline-secondary btn-sm mt-2">Guardar vínculos</button></form>@endif
+@endforeach
+@if($actor->children->isNotEmpty() || $actor->parents->isNotEmpty())<p><strong>Vínculos anteriores conservados</strong></p><ul>@foreach($actor->parents as $parent)<li>Vinculada a <a href="{{ route('admin.actors.show',$parent) }}">{{ $parent->code }} — {{ $parent->display_name }}</a></li>@endforeach @foreach($actor->children as $child)<li><a href="{{ route('admin.actors.show',$child) }}">{{ $child->code }} — {{ $child->display_name }}</a></li>@endforeach</ul>@endif
+</div></details>
+<details class="mb-3"><summary>Origen y autorizaciones</summary><dl class="row mt-3"><dt class="col-sm-4">Sistema de origen</dt><dd class="col-sm-8">{{ $actor->originActor?->system?->identity?->display_name ?? ($actor->system_id ? $system->identity->display_name : 'Sin asignar') }}</dd>@if($actor->originActor)<dt class="col-sm-4">Actor de origen</dt><dd class="col-sm-8">{{ $actor->originActor->display_name }} — {{ $actor->originActor->code }}</dd>@endif<dt class="col-sm-4">Participación local</dt><dd class="col-sm-8">{{ ['pending'=>'Pendiente','authorized'=>'Autorizada','blocked'=>'Bloqueada'][$actor->participation_status] }}</dd><dt class="col-sm-4">Acceso a la aplicación</dt><dd class="col-sm-8">{{ ['pending'=>'Pendiente','authorized'=>'Autorizado','blocked'=>'Bloqueado'][$actor->application_status] }}</dd></dl></details>
+<a class="btn btn-secondary" href="{{ route('admin.actors.index') }}">Volver</a>@if(!$actor->archived_at && $access->allows(request(),$system,'actors.edit')) <a class="btn btn-primary" href="{{ route('admin.actors.edit',$actor) }}">Editar actor</a>@endif
+</div></div>
+@if($actor->system_id && !$actor->archived_at && $access->allows(request(),$system,'actors.classify'))<script>(()=>{const catalog=@json(config('actors.types')), unit=document.getElementById('classification_unit'), types=document.getElementById('classification_type');const previous=@json((string)old('type_position',''));function load(){types.replaceChildren();types.disabled=!unit.value;for(const [value,label] of Object.entries(catalog[unit.value]||{})){types.add(new Option(label,value));}if(previous && [...types.options].some(o=>o.value===previous)){types.value=previous;}}unit.addEventListener('change',load);load();})();</script>@endif
+</x-admin-layout>

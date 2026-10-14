@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\DocumentController;
 use App\Http\Controllers\Admin\SystemController;
 use App\Http\Controllers\Admin\Administration\PlanningController;
 use App\Http\Controllers\Admin\Administration\GoalController;
+use App\Http\Controllers\Admin\Administration\ObjetiveController;
 use App\Http\Controllers\Admin\EntityController;
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\PostController;
@@ -90,6 +91,21 @@ Route::put('/planning/{plan}/goals/{goal}', [GoalController::class, 'update'])
 Route::delete('/planning/{plan}/goals/{goal}', [GoalController::class, 'destroy'])
     ->name('admin.planning.goals.destroy');
 
+Route::get('/planning/{plan}/objetives/create', [ObjetiveController::class, 'create'])
+    ->name('admin.planning.objetives.create');
+
+Route::post('/planning/{plan}/objetives', [ObjetiveController::class, 'store'])
+    ->name('admin.planning.objetives.store');
+
+Route::get('/planning/{plan}/objetives/{objetive}/edit', [ObjetiveController::class, 'edit'])
+    ->name('admin.planning.objetives.edit');
+
+Route::put('/planning/{plan}/objetives/{objetive}', [ObjetiveController::class, 'update'])
+    ->name('admin.planning.objetives.update');
+
+Route::delete('/planning/{plan}/objetives/{objetive}', [ObjetiveController::class, 'destroy'])
+    ->name('admin.planning.objetives.destroy');
+
 Route::get('/syquac/uf', [UfController::class, 'index'])->name('admin.syquac.uf.index');
 Route::get('/syquac/uf/{uf}', [UfController::class, 'show'])->name('admin.syquac.uf.show');
 Route::post('/syquac/uf/sincronizar',[UfController::class,'sincronizar'])->name('admin.syquac.uf.sincronizar');
@@ -98,6 +114,8 @@ Route::post('/system/active', [SystemController::class, 'active'])->name('admin.
 
 Route::resource('users', UserController::class)->names('admin.users');
 Route::resource('roles', RoleController::class)->names('admin.roles');
+Route::get('applications/{application}/dictionary', [ApplicationController::class, 'dictionary'])->name('admin.applications.dictionary');
+Route::post('applications/{application}/models', [ApplicationController::class, 'storeModel'])->name('admin.applications.models.store');
 Route::resource('applications', ApplicationController::class)->names('admin.applications');
 Route::resource('units', UnitController::class)->names('admin.units');
 Route::resource('categories', CategoryController::class)->names('admin.categories');
@@ -124,6 +142,8 @@ Route::resource('designs', DesignController::class)->names('admin.designs');
 
 
 
+Route::get('actors/import', [ActorController::class, 'importForm'])->name('admin.actors.import');
+Route::post('actors/import', [ActorController::class, 'importStore'])->name('admin.actors.import.store');
 Route::resource('actors', ActorController::class)->names('admin.actors');
 
 /*
@@ -185,3 +205,25 @@ Route::resource('economic-facts', EconomicFactController::class)->names('admin.e
 |--------------------------------------------------------------------------
 */
 
+
+// MeWo: shared operational catalogue and project-scoped executions.
+Route::get('mewo/contexts', [\App\Http\Controllers\Admin\MeWo\ContextController::class, 'index'])->name('admin.mewo.contexts.index');
+Route::resource('mewo/processes', \App\Http\Controllers\Admin\MeWo\ProcessController::class)->parameters(['processes' => 'process'])->only(['index', 'create', 'store', 'edit', 'update'])->names('admin.mewo.processes');
+Route::resource('activities.tasks', \App\Http\Controllers\Admin\MeWo\TaskController::class)->only(['create', 'store', 'edit', 'update', 'destroy'])->names('admin.activities.tasks');
+
+
+Route::resource('binnacles', \App\Http\Controllers\Admin\BinnacleController::class)->only(['index', 'create', 'store', 'show', 'edit', 'update'])->names('admin.binnacles');
+Route::get('binnacle-models/create', [\App\Http\Controllers\Admin\BinnacleModelController::class, 'create'])->name('admin.binnacle-models.create');
+Route::post('binnacle-models', [\App\Http\Controllers\Admin\BinnacleModelController::class, 'store'])->name('admin.binnacle-models.store');
+
+Route::post('binnacle/day/activities/{activity}/program', [\App\Http\Controllers\Admin\DailyBinnacleController::class, 'program'])->name('admin.binnacle.program');
+Route::post('binnacle/day/time', [\App\Http\Controllers\Admin\DailyBinnacleController::class, 'time'])->name('admin.binnacle.time');
+
+// System-scoped actor classifications, relationships and delegated access.
+Route::put('actors/{actor}/links', [ActorController::class, 'links'])->name('admin.actors.links');
+Route::get('actor-access', [\App\Http\Controllers\Admin\SystemAccessController::class, 'index'])->name('admin.actor-access.index');
+Route::post('actor-access', [\App\Http\Controllers\Admin\SystemAccessController::class, 'store'])->name('admin.actor-access.store');
+Route::put('actor-access/{role}', [\App\Http\Controllers\Admin\SystemAccessController::class, 'update'])->name('admin.actor-access.update');
+
+Route::post('actors/{actor}/classifications', [ActorController::class, 'classificationStore'])->name('admin.actors.classifications.store');
+Route::put('actor-classifications/{classification}/links', [ActorController::class, 'classificationLinks'])->name('admin.actors.classifications.links');

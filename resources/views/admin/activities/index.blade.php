@@ -1,39 +1,10 @@
 <x-admin-layout>
-
-    <!-- Encabezado -->
-    <x-slot name="content_header">
-
-        <a href="{{ route('admin.activities.create') }}" class="btn btn-primary float-right">Add Activity</a>
-        <h1>Lista de Actividades</h1>
-
-        <p class="py-4 text-base">Las actividades corresponden a los hechos fisicos, actividades o registros que el
-            usuario necesita guardar o almacenar, para ser utilizados con posterioridad y asi justificar o demostrar
-            hechos o interacciones pasadas para la satisfaccion de sus necesidades; estos hechos deben estar asociados a
-            un contexto que a nivel del programa corresponden a un modulo el cual se encarga de categorizar las acciones
-            para administrarlas y la manera de ocurrencia que tiene este hecho ya sea preventiva, correctiva o
-            emergencia</p>
-
-
-    </x-slot>
-    <!-- Contenido -->
-    <div>
-
-        @if (session('info'))
-            <div class="alert alert-success">
-                <strong>{{ session('info') }}</strong>
-            </div>
-        @endif
-        @livewire('admin.activity-index')
-    </div>
-
-
-    <!-- Estilos -->
-    <x-slot name="css">
-
-    </x-slot>
-
-    <!-- javaScript -->
-    <x-slot name="js">
-
-    </x-slot>
+<x-slot name="content_header"><h1>Actividades MeWo</h1></x-slot>
+@include('admin.mewo._messages')
+<a class="btn btn-primary mb-3" href="{{ route('admin.activities.create') }}">Agregar actividad</a>
+<div class="card"><div class="card-body table-responsive"><table class="table">
+<thead><tr><th>Actividad</th><th>Proyecto</th><th>Contextos participantes</th><th>Tareas</th></tr></thead><tbody>
+@forelse($activities as $activity)<tr><td><a href="{{ route('admin.activities.show', $activity) }}">{{ $activity->name }}</a></td><td>{{ $activity->project->name }}</td><td>{{ $activity->contexts->pluck('name')->join(', ') }}</td><td>{{ $activity->tasks_count }}</td></tr>
+@empty<tr><td colspan="4">No hay actividades registradas.</td></tr>@endforelse
+</tbody></table>{{ $activities->links() }}</div></div>
 </x-admin-layout>

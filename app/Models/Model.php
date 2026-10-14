@@ -15,6 +15,6 @@ class Model extends EloquentModel
 
     public function applications()
     {
-        return $this->belongsToMany(Application::class);
+        return $this->belongsToMany(Application::class)->wherePivot('is_active', true);
     }
 }

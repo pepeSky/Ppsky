@@ -29,15 +29,19 @@
 
                 <dt class="col-sm-3">Actor</dt>
                 <dd class="col-sm-9">
-                    {{ $identity->actor ? 'Sí' : 'No' }}
+                    {{ $identity->actors->count() }}
                 </dd>
 
             </dl>
 
+            @include('admin.identities.formal-details')
+
+            @if($canManage)
             <a href="{{ route('admin.identities.edit', $identity) }}"
                class="btn btn-warning">
                 Editar
             </a>
+            @endif
 
             <a href="{{ route('admin.identities.index') }}"
                class="btn btn-secondary">

@@ -1,10 +1,12 @@
 <x-admin-layout>
 
     <x-slot name="content_header">
+        @if($canManage)
         <a href="{{ route('admin.interactions.create') }}"
            class="btn btn-primary float-right">
             Agregar Interacción
         </a>
+        @endif
 
         <h1>Interacciones</h1>
 
@@ -42,7 +44,7 @@
                             <td>{{ $interaction->id }}</td>
 
                             <td>
-                                {{ $interaction->actorA->identity->entity->name }}
+                                {{ $interaction->actorA->display_name }}
                             </td>
 
                             <td class="text-center">
@@ -50,7 +52,7 @@
                             </td>
 
                             <td>
-                                {{ $interaction->actorB->identity->entity->name }}
+                                {{ $interaction->actorB->display_name }}
                             </td>
 
                             <td>
@@ -67,6 +69,7 @@
                                     Ver
                                 </a>
 
+                                @if($canManage)
                                 <a href="{{ route('admin.interactions.edit', $interaction) }}"
                                    class="btn btn-sm btn-warning">
                                     Editar
@@ -85,6 +88,7 @@
                                         Eliminar
                                     </button>
                                 </form>
+                                @endif
                             </td>
                         </tr>
 

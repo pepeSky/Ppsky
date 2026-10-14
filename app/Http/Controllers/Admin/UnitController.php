@@ -87,6 +87,9 @@ class UnitController extends Controller
             'system' => ['nullable', 'string', 'max:255'],
             'type' => ['nullable', 'string', 'max:255'],
         ]);
+        if((\App\Models\Actor::where('unit_id',$unit->id)->exists() || \App\Models\ActorClassification::where('unit_id',$unit->id)->exists()) && ($unit->symbol!==$validated['symbol'] || $unit->system!==($validated['system'] ?? null))) {
+            return back()->withErrors(['symbol'=>'Esta unidad tiene actores asociados; conserve su símbolo y sistema.']);
+        }
         $unit->update($validated);
         return redirect()->route('admin.units.index')->with('info', 'Unidad modificada correctamente.');
     }
@@ -99,6 +102,7 @@ class UnitController extends Controller
      */
     public function destroy(Unit $unit)
     {
+        if((\App\Models\Actor::where('unit_id',$unit->id)->exists() || \App\Models\ActorClassification::where('unit_id',$unit->id)->exists())) { return back()->withErrors(['unit'=>'Esta unidad tiene actores asociados y debe conservarse.']); }
         $unit->delete();
         return redirect()->route('admin.units.index')->with('info', 'Unidad eliminada correctamente.');
     }

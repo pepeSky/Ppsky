@@ -16,7 +16,7 @@
 
                 <dt class="col-sm-3">Primer actor</dt>
                 <dd class="col-sm-9">
-                    {{ $interaction->actorA->identity->entity->name }}
+                    {{ $interaction->actorA->display_name }}
                 </dd>
 
                 <dt class="col-sm-3">Relación</dt>
@@ -26,7 +26,7 @@
 
                 <dt class="col-sm-3">Segundo actor</dt>
                 <dd class="col-sm-9">
-                    {{ $interaction->actorB->identity->entity->name }}
+                    {{ $interaction->actorB->display_name }}
                 </dd>
 
                 <dt class="col-sm-3">Cohesión</dt>
@@ -46,10 +46,12 @@
 
             </dl>
 
+            @if($canManage)
             <a href="{{ route('admin.interactions.edit', $interaction) }}"
                class="btn btn-warning">
                 Editar
             </a>
+            @endif
 
             <a href="{{ route('admin.interactions.index') }}"
                class="btn btn-secondary">

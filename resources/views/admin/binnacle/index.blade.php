@@ -1,36 +1,14 @@
 <x-admin-layout>
-
-    <!-- Encabezado -->
-    <x-slot name="content_header">
-
-        <a href="{{ route('admin.posts.create') }}" class="btn btn-primary float-right">Add Posts</a>
-        <h1>Registros</h1>
-
-        <p class="py-4 text-base">Los registros corresponden a las acciones que el
-            usuario necesita guardar o almacenar para ser utilizados con posterioridad y asi justificar o demostrar
-            hechos o interacciones pasadas para la satisfaccion de sus necesidades; estos hechos deben estar asociados a un contexto o proyecto que a nivel del programa corresponden a un modulo el cual se encarga de categorizar las acciones y la manera de ocurrencia que tienen estos ya sea preventiva, correctiva o emergencia</p>
-
-
-    </x-slot>
-    <!-- Contenido -->
-    <div>
-
-        @if (session('info'))
-            <div class="alert alert-success">
-                <strong>{{ session('info') }}</strong>
-            </div>
-        @endif
-        @livewire('admin.posts-index')
-    </div>
-
-
-    <!-- Estilos -->
-    <x-slot name="css">
-
-    </x-slot>
-
-    <!-- javaScript -->
-    <x-slot name="js">
-
-    </x-slot>
-</x-admin-layout>
+<x-slot name="content_header">
+<div class="d-flex justify-content-between align-items-center flex-wrap"><div><h1 class="mb-0">Histórico de bitácoras</h1><small class="text-muted">Histórico de bitácoras del Sistema</small></div>
+@if($activeSystem)<form method="POST" action="{{ route('admin.system.active') }}" class="form-inline mt-2">@csrf<label for="system_id" class="mr-2">Sistema</label><select id="system_id" name="system_id" class="form-control" onchange="this.form.submit()">@foreach($systems as $system)<option value="{{ $system->id }}" @selected($activeSystem->id===$system->id)>{{ $system->identity->entity->name }}</option>@endforeach</select></form>@endif</div>
+<div class="mt-3 d-flex flex-wrap" style="gap:8px">@if($activeSystem)<a class="btn btn-primary" href="{{ route('propositions.create',['system_id'=>$activeSystem->id]) }}">Agregar proposición</a><a class="btn btn-outline-secondary" href="{{ route('admin.posts.index') }}">Jornada actual</a><a class="btn btn-outline-primary" href="{{ route('admin.binnacle-models.create') }}">Agregar modelo</a>@endif</div>
+</x-slot>
+<div class="container-fluid">@include('admin.mewo._messages')
+<form method="GET" action="{{ route('admin.binnacles.index') }}" class="mb-3"><label class="sr-only" for="binnacle-search">Buscar bitácora</label><div class="input-group"><input type="search" id="binnacle-search" name="search" autocomplete="off" class="form-control" placeholder="Buscar bitácora" value="{{ request('search') }}"><div class="input-group-append"><button class="btn btn-outline-secondary">Buscar</button></div></div></form>
+<div class="card card-outline card-primary"><div class="card-header"><h3 class="card-title">Bitácoras del Sistema</h3></div><div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>Fecha</th><th>Bitácora</th><th>Sistema</th><th>Proyecto</th><th>Proposiciones</th><th>Actividades</th><th>Modelos</th><th></th></tr></thead><tbody>
+@forelse($binnacles as $binnacle)<tr><td>{{ $binnacle->recorded_on->format('d-m-Y') }}</td><td><strong>{{ $binnacle->title }}</strong><small class="d-block text-muted">BIT-{{ $binnacle->id }} · {{ $binnacle->user->name }}</small></td><td>{{ $binnacle->system->identity->entity->name }}</td><td>{{ $binnacle->project?->name ?? '—' }}</td><td>{{ $binnacle->propositions_count }}</td><td>{{ $binnacle->activities_count }}</td><td>{{ $binnacle->models_count }}</td><td><a class="btn btn-sm btn-primary" href="{{ route('admin.binnacles.show',$binnacle) }}">Abrir</a></td></tr>
+@empty<tr><td colspan="8" class="text-center text-muted py-4">{{ $activeSystem ? 'El Sistema activo no tiene bitácoras registradas.' : 'No hay un Sistema disponible.' }}</td></tr>@endforelse
+</tbody></table></div></div></div>{{ $binnacles->links() }}
+@if($legacyPosts->isNotEmpty())<div class="card"><div class="card-header">Registros anteriores</div><div class="card-body"><p class="text-muted">Publicaciones anteriores del usuario, conservadas sin asignarlas automáticamente a una bitácora o Sistema.</p>@foreach($legacyPosts as $post)<p><a href="{{ route('admin.posts.show',$post) }}">{{ $post->name }}</a></p>@endforeach</div></div>@endif
+</div></x-admin-layout>
